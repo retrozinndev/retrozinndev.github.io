@@ -1,5 +1,9 @@
-# Retrozinn's Website ([retrozinn.dev](https://retrozinn.dev))
+# Retrozinn's Website ([retrozinndev.github.io](https://retrozinndev.github.io))
 [![Netlify Status](https://api.netlify.com/api/v1/badges/8754cf85-e75f-495c-8818-011d76157362/deploy-status)](https://app.netlify.com/sites/retrozinndev/deploys)
+
+> [!warning]
+> My domain is not appearing in my Squarespace account(after the Google Domains aquisition by Squarespace),
+> so I moved back to the default `github.io` subdomain temporarily.
 
 > [!warning]
 > I'm going to move from GitHub Pages to Netlify soon, expect some outage.
