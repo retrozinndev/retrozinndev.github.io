@@ -6,13 +6,11 @@ For more information see:
 * https://github.com/ryanoasis/nerd-fonts/
 * https://github.com/ryanoasis/nerd-fonts/releases/latest/
 
-# 0xProto
+# Symbols Only
 
-A programming font focused on source code legibility.
-
-For more information have a look at the upstream website: https://github.com/0xType/0xProto
-
-Version: 2.201
+This font contains (in the patched-fonts folder) all symbols and is intended to be used
+as fallback or together with fontconfig - so that you do not need to individually
+patch all the fonts. YMMV.
 
 ## Which font?
 
@@ -36,7 +34,7 @@ Once you narrow down your font choice of family (`Droid Sans`, `Inconsolata`, et
 #### `Option 1: Download already patched font`
 
  * For a stable version download a font package from the [release page](https://github.com/ryanoasis/nerd-fonts/releases)
- * Direct links for [0xProto.zip](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/0xProto.zip) or [0xProto.tar.xz](https://github.com/ryanoasis/nerd-fonts/releases/latest/download/0xProto.tar.xz)
+ * Or download the development version from the folders here
 
 #### `Option 2: Patch your own font`
 

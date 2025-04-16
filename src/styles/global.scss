@@ -1,6 +1,6 @@
 
-@use "_colors.scss";
-@use "_fonts.scss";
+@use "./colors";
+@use "./fonts";
 
 html {
     font-family: Noto Sans, Segoe UI, sans-serif;
@@ -36,6 +36,10 @@ h2 {
 
 h3 {
     font-size: 18px;
+}
+
+.nf {
+  font-family: "Nerd Font Symbols";
 }
 
 .center {
