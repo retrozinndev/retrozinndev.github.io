@@ -1,5 +1,6 @@
-@use "./colors";
+
 @use "./fonts";
+@use "./colors";
 
 html {
     font-family: Noto Sans, Segoe UI, sans-serif;
@@ -39,6 +40,10 @@ body {
       color: colors.$accent-color-dark
     }
   }
+
+  & .nf, .nf {
+    font-family: "NerdFontsSymbols Nerd Font"
+  }
 }
 
 h1 {
@@ -51,10 +56,6 @@ h2 {
 
 h3 {
     font-size: 18px;
-}
-
-.nf {
-  font-family: "Nerd Font Symbols";
 }
 
 .center {
