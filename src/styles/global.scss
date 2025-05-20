@@ -1,4 +1,3 @@
-
 @use "./colors";
 @use "./fonts";
 
@@ -9,21 +8,37 @@ html {
 }
 
 body {
-    overflow-y: scroll;
-    overflow-inline: clip;
-    color: white;
-}
+  overflow-y: scroll;
+  overflow-inline: clip;
+  color: white;
 
-body.dark {
+  & a {
+    all: unset;
+    transition: 120ms ease-in;
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: 600;
+  }
+
+  &.dark {
     color-scheme: dark;
     background-color: colors.$bg-color-dark;
     color: white;
-}
 
-body.light {
+    a:hover {
+      color: colors.$accent-color;
+    }
+  }
+
+  &.light {
     color-scheme: light;
     background-color: colors.$bg-color-light;
     color: black;
+
+    a:hover {
+      color: colors.$accent-color-dark
+    }
+  }
 }
 
 h1 {
