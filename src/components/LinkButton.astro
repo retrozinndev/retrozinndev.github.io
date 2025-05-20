@@ -1,18 +1,20 @@
 ---
 interface Props {
     href: string;
+    external?: boolean;
 }
 
-const { href } = Astro.props;
+const { href, external } = Astro.props;
 ---
 
 <a class="link-button" href={ href }>
-    <slot />
+    <slot /> <i style=`display: ${external ? "initial" : "none"}` 
+                class="nf nf-oct-arrow_up_right" />
 </a>
 
 <style lang="scss">
 
-    @import "../styles/_colors.scss";
+    @use "../styles/colors";
 
     a {
         display: inline-flex;
@@ -23,22 +25,22 @@ const { href } = Astro.props;
         box-sizing: content-box;
         color: inherit;
         
-        border: solid 0.032em $accent-color;
+        border: solid 0.032em colors.$accent-color;
         padding: 5px 8px;
         border-radius: 12px;
         text-decoration: none;
         -webkit-tap-highlight-color: transparent;
         transition: 150ms linear;
-    }
 
-    body.dark a:hover {
-        color: white;
-        background-color: $accent-color-dark;
+        &:hover {
+            color: white;
+            background-color: colors.$accent-color-dark;
+        }
     }
 
     body.light a:hover {
         color: black;
-        background-color: $accent-color;
+        background-color: colors.$accent-color;
     }
 </style>
 

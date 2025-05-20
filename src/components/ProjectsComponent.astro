@@ -1,50 +1,97 @@
 ---
 import { useTranslations } from "../i18n/utils";
-import ProjectCard from "./ProjectCard.astro";
+import ProjectCard, { type Project } from "./ProjectCard.astro";
 
 const tr = useTranslations(Astro.params.lang as never || "en");
 
+const projects: Array<Project> = [
+    {
+        title: "colorshell",
+        developer: "retrozinndev",
+        description: "Super cool desktop shell for Hyprland!",
+        href: "https://github.com/retrozinndev/colorshell"
+    },
+    {
+        title: "retrozinndev.github.io",
+        developer: "retrozinndev",
+        description: "My personal website",
+        href: "https://github.com/retrozinndev/retrozinndev.github.io"
+    },
+    {
+        title: "parceirtoti.github.io",
+        developer: "parceiroti",
+        description: "ParceiroTI's website redesign",
+        href: "https://github.com/parceiroti/parceiroti.github.io"
+    },
+    {
+        title: "UpDateN'Time",
+        developer: "retrozinndev",
+        description: "A Tool that synchronizes your date and time with the internet",
+        href: "https://github.com/retrozinndev/UpDateNTime"
+    },
+    {
+        title: "The Traveler",
+        developer: "notestudios",
+        description: "A two-dimensional shooter game",
+        href: "https://github.com/notestudios/TheTraveler"
+    },
+    {
+        title: "Space Shooter",
+        developer: "notestudios",
+        description: "Shoot meteors in Space!",
+        href: "https://github.com/notestudios/SpaceShooter"
+    }
+];
+
 ---
 
-<ProjectCard icon="https://github.com/retrozinndev.png"
-developer="retrozinndev"
-title="retrozinn.dev"
-description={ tr("projects.retrozinndev_website.description") }
-href="https://github.com/retrozinndev/retrozinn.dev" />
+<div class="projects"> {
+    projects.map(project => (
+        <div class="item">
+            <ProjectCard {...project} />
+        </div>
+    ))
+} </div>
 
-<ProjectCard icon="https://github.com/parceiroti.png" 
-developer="parceiroti" 
-title="parceiroti.github.io" 
-description={ tr("projects.parceiroti_website.description") } 
-href="https://github.com/parceiroti/parceiroti.github.io" />
+<style lang="scss">
+    
+    @use "../styles/colors";
 
-<ProjectCard icon="https://github.com/retrozinndev.png" 
-developer="retrozinndev" 
-title="UpDateN'Time" 
-description={ tr("projects.updatentime.description") } 
-href="https://github.com/retrozinndev/updatentime" />
+    .projects {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        height: 100%;
 
-<ProjectCard icon="https://github.com/notestudios.png" 
-developer="notestudios" 
-title="Note UI" 
-description={ tr("projects.noteui.description") } 
-href="https://github.com/notestudios/noteui" />
+        & .item {
+            width: 48%;
+            display: flex;
+            overflow: hidden;
+            border-radius: 16px;
+            margin: 4px;
+            transition: 200ms ease-in;
 
-<ProjectCard icon="https://github.com/retrozinndev.png" 
-developer="retrozinndev" 
-title="JSONutils" 
-description={ tr("projects.jsonutils.description") } 
-href="https://github.com/retrozinndev/jsonutils" />
+            &:hover {
+                box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, .5);
+                transform: translateY(-2px);
+            }
+        }
+    }
 
-<ProjectCard icon="https://github.com/notestudios.png" 
-developer="notestudios" 
-title="The Traveler" 
-description={ tr("projects.thetraveler.description") } 
-href="https://github.com/notestudios/thetraveler" />
+    body.light .projects .item:hover {
+        box-shadow: 0px 10px 25px .05em rgba(100, 100, 100, .5);
+    }
 
-<ProjectCard icon="https://github.com/notestudios.png" 
-developer="notestudios" 
-title="Space Shooter" 
-description={ tr("projects.spaceshooter.description") } 
-href="https://github.com/notestudios/spaceshooter" />
+    @media screen and (max-width: 700px) {
+        .projects {
+            display: flex;
+            width: 100%;
 
+            & .item {
+                width: 100%;
+                margin: 0;
+                margin-block: 4px;
+            }
+        }
+    }
+</style>

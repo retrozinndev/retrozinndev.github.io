@@ -12,7 +12,9 @@ const tr = useTranslations(lang as never);
     <nav class="navigation" id="navbar" aria-label="Navigation Bar">
         <div class="left-side">
             <a rel="author" href="https://github.com/retrozinndev">
-                <Image class="profile-pic" src="https://github.com/retrozinndev.png" width=32 height=32 alt="Me" />
+                <Image class="profile-pic" 
+                       src="https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=80"
+                       width=32 height=32 alt={ tr("nav.home") } />
             </a>
         </div>
         <ul class="links">
@@ -22,6 +24,7 @@ const tr = useTranslations(lang as never);
             <li class="link">
                 <a href={`/${lang}#about`} target="_self">{ tr("nav.about") }</a>
             </li>
+
             {
                 pages.map(page => (
                     <li class="link">
@@ -29,23 +32,22 @@ const tr = useTranslations(lang as never);
                     </li>
                 ))
             }
+
             <li class="action">
                 <a href="#" id="nav-toggle-theme"><span id="nav-theme-icon" class="nf nf-oct-sun"></span></a>
             </li>
         </ul>
-        <select name="Language" id="langSelector">
-            {
-                languages.map(l => (
-                    <option value=`${l}`>{ i18n[l as keyof typeof i18n]["language" as keyof typeof i18n] }</option>
-                ))
-            }
-        </select>
+        <select name="Language" id="langSelector"> {
+            languages.map(l => (
+                <option value=`${l}`>{ i18n[l as keyof typeof i18n].language }</option>
+            ))
+        } </select>
     </nav>
 </div>
 
 <script>
 
-    import { getStoredTheme, getThemes, applyTheme, getTheme, toggleTheme } from "../scripts/theme.ts";
+    import { applyTheme, getTheme, toggleTheme } from "../scripts/theme.ts";
     import { getLanguageFromURL } from "../i18n/utils.ts";
 
     const navigation = document.getElementById("navbar") as HTMLDivElement;
@@ -54,51 +56,44 @@ const tr = useTranslations(lang as never);
     const languageSelector = document?.getElementById("langSelector") as HTMLSelectElement;
 
     window.onscroll = () => {
-        if(navigation) {
-            if(window.scrollY >= 24) {
-                navigation.classList.add("scrolled");
-            } else {
-                navigation.classList.remove("scrolled");
-            }
-        } 
+        if(!navigation) return;
+
+        window.scrollY >= 24 ?
+            navigation.classList.add("scrolled")
+        : navigation.classList.remove("scrolled");
     };
 
     if(toggleThemeButton && toggleThemeIcon) {
         toggleThemeButton.onclick = () => {
             toggleTheme();
             applyTheme(getTheme());
+
             if (getTheme() == "dark")
                 toggleThemeIcon.className = "nf nf-oct-sun";
             else  
                 toggleThemeIcon.className = "nf nf-oct-moon";
         };
 
-        if (getTheme() == "dark")
-            toggleThemeIcon.className = "nf nf-oct-sun";
-        else 
-            toggleThemeIcon.className = "nf nf-oct-moon";
+        
+        toggleThemeIcon.className = getTheme() == "dark" ? 
+            "nf nf-oct-sun"
+        : "nf nf-oct-moon";
     }
 
-    window.onload = () => {
-        applyTheme(getStoredTheme() || getThemes()[0]);
+    navigation.onload = () => {
+        if(!languageSelector) return;
 
-        if(languageSelector) {
-            languageSelector.value = getLanguageFromURL(new URL(window.location.href));
-
-            languageSelector.onchange = (event: Event) => {
-                const eventTarget = event.target as HTMLSelectElement, 
-                newLanguage = eventTarget?.value as string;
-
-                window.location.href = `/${newLanguage}`;
-            }
-        }
+        languageSelector.value = getLanguageFromURL(new URL(window.location.href));
+        languageSelector.onchange = (event) => 
+            window.location.href = `/${(event.target as HTMLSelectElement).value}`;
     }
 
 </script>
 
 <style lang="scss">
 
-    @import "../styles/_colors.scss";
+    @use "sass:color";
+    @use "../styles/colors";
 
     div.navigation-bar {
         position: sticky;
@@ -112,7 +107,8 @@ const tr = useTranslations(lang as never);
 
     #navbar {
         display: flex;
-        border-radius: 12px;
+        border-radius: 16px;
+        backdrop-filter: blur(40px);
         font-size: medium;
         justify-content: center;
         align-items: center;
@@ -124,12 +120,12 @@ const tr = useTranslations(lang as never);
         flex-wrap: wrap;
     }
 
-    body.dark nav.navigation {
-        background-color: $bg-navbar-color-dark;
+    .navigation {
+        background: color.scale($color: colors.$bg-navbar-color-dark, $alpha: -20%);
     }
 
-    body.light nav.navigation {
-        background-color: $bg-navbar-color-light;
+    body.light .navigation {
+        background-color: color.scale($color: colors.$bg-navbar-color-light, $alpha: -20%);
     }
 
     body.dark .navigation.scrolled {
@@ -138,11 +134,6 @@ const tr = useTranslations(lang as never);
 
     body.light .navigation.scrolled {
         box-shadow: 0 0 5px 2px darkgray;
-    }
-
-    .left-side span.website {
-        margin: 0;
-        vertical-align: center;
     }
 
     .left-side img {
@@ -164,6 +155,10 @@ const tr = useTranslations(lang as never);
         margin-inline: .5em;
         list-style: none;
         padding: 0;
+
+        &.link > * {
+
+        }
 
         &:first-child {
             margin-inline-start: 0px;
@@ -193,16 +188,16 @@ const tr = useTranslations(lang as never);
     }
 
     body.dark a:hover {
-        color: $accent-color;
+        color: colors.$accent-color;
     }
 
     body.light a:hover {
-        color: $accent-color-dark;
+        color: colors.$accent-color-dark;
     }
 
     @media screen and (max-width: 700px) {
         #navbar {
-            padding-block: 12px;
+            padding-block: 14px;
         }
     }
 

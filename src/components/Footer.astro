@@ -12,9 +12,10 @@ const tr = useTranslations(lang);
 
 <style lang="scss">
 
-    @import "../styles/_colors.scss";
+    @use "../styles/colors";
 
     .footer {
+        margin-top: 64px;
         overflow: hidden;
         display: block;
         width: 100%;
@@ -32,13 +33,5 @@ const tr = useTranslations(lang);
     body.light a,
     body.light .footer {
         color: gray;
-    }
-
-    body.dark a:hover {
-        color: $accent-color;
-    }
-
-    body.light a:hover {
-        color: $accent-color-dark;
     }
 </style>
