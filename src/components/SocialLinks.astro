@@ -8,78 +8,73 @@ import LinkButton from "./LinkButton.astro";
     width={340}
     height={120}
     sandbox="allow-scripts"
-    frameborder={0}
-    src="https://widgets.vendicated.dev/user?id=568589231954591749&theme=dark&banner=true&full-banner=false&rounded-corners=false&discord-icon=true&badges=false&guess-nitro=false&"
+    style="display: none"
  />
 
 <script>
-    import { getTheme } from "../scripts/theme.ts";
+    import { getTheme } from "../scripts/theme";
 
     const discordEmbed = document.getElementById("discordEmbed") as HTMLIFrameElement;
+    discordEmbed.src = `https://widgets.vendicated.dev/user?id=568589231954591749&theme=${getTheme()}&banner=true&full-banner=false&rounded-corners=false&discord-icon=true&badges=false&guess-nitro=false`;
+    discordEmbed.style.display = "initial";
 
-    // Check theme for changes
-    const lastTheme = getTheme();
-    if(lastTheme !== getTheme() && discordEmbed.contentWindow !== null) {
-        // (fortnite)Reload discord embed(thanks Vee! :3)
-        discordEmbed.contentWindow.postMessage({
-            command: "setTheme",
-            theme: `${getTheme}`
-        }, "*");
-    }
+    new MutationObserver(mutations => {
+        mutations.forEach((mutation) => {
+            if(mutation.type !== "attributes" && mutation.attributeName !== "class")
+                return;
+
+            discordEmbed.contentWindow?.postMessage({
+                command: "setTheme",
+                theme: getTheme() ?? "dark"
+            }, "*")
+        });
+    }).observe(document.body as HTMLBodyElement, { attributes: true });
 </script>
 
-<ul class="stylish-list">
-    <li>
-        <i class="nf nf-fa-github"></i> GitHub <LinkButton href="https://github.com/retrozinndev">retrozinndev</LinkButton>
-    </li>
-    <li>
-        <i class="nf nf-fa-gitlab"></i> GitLab <LinkButton href="https://gitlab.com/retrozinndev">retrozinndev</LinkButton>
-    </li>
-    <li>
-        <i class="nf nf-linux-codeberg"></i> CodeBerg <LinkButton href="https://codeberg.org/retrozinndev">retrozinndev</LinkButton>
-    </li>
-    <li>
-        <img class="icon x" src="/icons/x.svg" draggable="false"> X / Twitter <LinkButton href="https://x.com/retrozinndev">@retrozinndev</LinkButton>
-    </li>
-    <li>
-        <i class="nf nf-md-matrix"></i> Matrix <LinkButton href="https://matrix.to/#/@retrozinndev:matrix.org">@retrozinndev:matrix.org</LinkButton>
-    </li>
-    <li>
-        <i class="nf nf-fa-reddit"></i> Reddit <LinkButton href="https://www.reddit.com/user/Much_Clue7037">Much_Clue7037</LinkButton>
-    </li>
-    <li>
-        <i class="nf nf-oct-mail"></i> Mail <LinkButton href="mailto:joaovodias@gmail.com">joaovodias@gmail.com</LinkButton>
-    </li>
-</ul>
+<table class="stylish-table">
+    <tr>
+        <td><i class="nf nf-fa-github"></i> GitHub</td>
+        <td><LinkButton href="https://github.com/retrozinndev">retrozinndev</LinkButton></td>
+    </tr>
+    <tr>
+        <td><i class="nf nf-fa-gitlab"></i> GitLab</td>
+        <td><LinkButton href="https://gitlab.com/retrozinndev">retrozinndev</LinkButton></td>
+    </tr>
+    <tr>
+        <td><i class="nf nf-linux-codeberg" /> CodeBerg</td>
+        <td><LinkButton href="https://codeberg.org/retrozinndev">retrozinndev</LinkButton></td>
+    </tr>
+    <tr>
+        <td><i class="nf nf-dev-twitter" /> X / Twitter</td>
+        <td><LinkButton href="https://x.com/retrozinndev">@retrozinndev</LinkButton></td>
+    </tr>
+    <tr>
+        <td><i class="nf nf-md-code_brackets"></i> Matrix</td>
+        <td><LinkButton href="https://matrix.to/#/@retrozinndev:matrix.org">@retrozinndev:matrix.org</LinkButton></td>
+    </tr>
+    <tr>
+        <td><i class="nf nf-fa-reddit"></i> Reddit</td>
+        <td><LinkButton href="https://www.reddit.com/user/Much_Clue7037">Much_Clue7037</LinkButton></td>
+    </tr>
+    <tr>
+        <td><i class="nf nf-oct-mail"></i> Mail</td>
+        <td><LinkButton href="mailto:joaovodias@gmail.com">joaovodias@gmail.com</LinkButton></td>
+    </tr>
+</table>
 
 <style>
 
-    .stylish-list {
+    .stylish-table {
         font-size: 16px;
         padding-left: 12px;
         list-style: none;
+        border-spacing: 6px;
     }
 
-    .stylish-list > li {
-        display: flex;
-        width: fit-content;
-        box-sizing: content-box;
-        border-radius: 8px;
-        padding-inline: 2px;
-        margin: 4px;
-        line-height: 28px;
-        align-items: center;
-        justify-content: center;
-    }
-
-    i.nf, img.x {
+    i.nf {
         width: 22px;
         font-size: 22px;
         margin-right: 6px;
-    }
-
-    body.light img.icon.x {
-        filter: brightness(0%);
     }
 
 </style>
