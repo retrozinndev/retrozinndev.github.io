@@ -1,4 +1,4 @@
-
+@use "sass:color";
 @use "./fonts";
 @use "./colors";
 
@@ -40,10 +40,6 @@ body {
       color: colors.$accent-color-dark
     }
   }
-
-  & .nf, .nf {
-    font-family: "NerdFontsSymbols Nerd Font"
-  }
 }
 
 h1 {
@@ -67,16 +63,14 @@ h3 {
     transform: translate(0, -50%);
 }
 
-.highlight {
-    position: flex;
-    font-style: bolder;
+span.highlight {
     font-weight: bolder;
-    color: colors.$accent-color;
+    color: colors.$accent-color-dark;
     transition: ease-in-out 500ms;
 }
 
-.highlight:hover {
-    color: colors.$accent-color;
+body.light span.highlight {
+  color: color.scale($color: colors.$accent-color-dark, $lightness: 12%);
 }
 
 iframe {
