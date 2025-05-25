@@ -1,7 +1,7 @@
 <!-- Initialize i18n at index page -->
 
 <!DOCTYPE html>
-<html>
+<html lang="en" style="background-color: rgb(40, 40, 40);">
     <head>
         <script>
             import { languages } from "../i18n/ui";
@@ -10,16 +10,12 @@
 
             for(let i = 0; i < languages.length; i++) {
                 if(languages[i] === preferredLang) {
-                    window.location.href = "/" + preferredLang;
-                } else {
-                    window.location.href = "/en";
+                    window.location.pathname = `/${preferredLang}`;
+                    break;
                 }
+
+                window.location.href = "/en";
             }
         </script>
     </head>
-    <style>
-        html {
-            background: rgb(40,40,40);
-        }
-    </style>
 </html>

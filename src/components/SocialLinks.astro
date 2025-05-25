@@ -1,15 +1,69 @@
 ---
-// Discord User Widget by vendicated (https://vendicated.dev/)
+import type { IconType } from "react-icons";
+import { FaGithub, FaGitlab, FaXTwitter, FaReddit, FaDiscord } from "react-icons/fa6";
+import { FiMail } from "react-icons/fi";
 import LinkButton from "./LinkButton.astro";
+
+type SocialLink = {
+    name: string;
+    href: string;
+    icon: IconType
+};
+
+const socials: Array<SocialLink> = [
+    {
+        name: "GitHub",
+        href: "https://github.com/retrozinndev",
+        icon: FaGithub
+    },
+    {
+        name: "GitLab",
+        href: "https://gitlab.com/retrozinndev",
+        icon: FaGitlab
+    },
+    {
+        name: "Discord",
+        href: "https://discord.com/users/568589231954591749",
+        icon: FaDiscord
+    },
+    {
+        name: "X / Twitter",
+        href: "https://x.com/retrozinndev",
+        icon: FaXTwitter
+    },
+    {
+        name: "Reddit",
+        href: "https://reddit.com/user/Much_Clue7037",
+        icon: FaReddit
+    },
+    {
+        name: "Mail",
+        href: "mailto:joaovodias@gmail.com",
+        icon: FiMail
+    }
+];
 ---
 
+<!-- Discord User Widget by vendicated (https://vendicated.dev/) -->
 <iframe id="discordEmbed"
     title="Discord"
     width={340}
     height={120}
     sandbox="allow-scripts"
     style="display: none"
+    onclick=`window.open("${socials[2].href}", "_blank")`
  />
+
+<ul class="social-links"> {
+    socials.map(social => 
+        <li class="social-link">
+            <LinkButton href={social.href} external={true} 
+                        showIcon={false} title={social.name}>
+                <social.icon size={18} />
+            </LinkButton>
+        </li>
+    )
+} </ul>
 
 <script>
     import { getTheme } from "../scripts/theme";
@@ -31,50 +85,11 @@ import LinkButton from "./LinkButton.astro";
     }).observe(document.body as HTMLBodyElement, { attributes: true });
 </script>
 
-<table class="stylish-table">
-    <tr>
-        <td><i class="nf nf-fa-github"></i> GitHub</td>
-        <td><LinkButton href="https://github.com/retrozinndev">retrozinndev</LinkButton></td>
-    </tr>
-    <tr>
-        <td><i class="nf nf-fa-gitlab"></i> GitLab</td>
-        <td><LinkButton href="https://gitlab.com/retrozinndev">retrozinndev</LinkButton></td>
-    </tr>
-    <tr>
-        <td><i class="nf nf-linux-codeberg" /> CodeBerg</td>
-        <td><LinkButton href="https://codeberg.org/retrozinndev">retrozinndev</LinkButton></td>
-    </tr>
-    <tr>
-        <td><i class="nf nf-dev-twitter" /> X / Twitter</td>
-        <td><LinkButton href="https://x.com/retrozinndev">@retrozinndev</LinkButton></td>
-    </tr>
-    <tr>
-        <td><i class="nf nf-md-code_brackets"></i> Matrix</td>
-        <td><LinkButton href="https://matrix.to/#/@retrozinndev:matrix.org">@retrozinndev:matrix.org</LinkButton></td>
-    </tr>
-    <tr>
-        <td><i class="nf nf-fa-reddit"></i> Reddit</td>
-        <td><LinkButton href="https://www.reddit.com/user/Much_Clue7037">Much_Clue7037</LinkButton></td>
-    </tr>
-    <tr>
-        <td><i class="nf nf-oct-mail"></i> Mail</td>
-        <td><LinkButton href="mailto:joaovodias@gmail.com">joaovodias@gmail.com</LinkButton></td>
-    </tr>
-</table>
-
-<style>
-
-    .stylish-table {
-        font-size: 16px;
-        padding-left: 12px;
+<style lang="scss">
+    .social-links {
+        display: flex;
+        flex-direction: row;
         list-style: none;
-        border-spacing: 6px;
+        padding: 0;
     }
-
-    i.nf {
-        width: 22px;
-        font-size: 22px;
-        margin-right: 6px;
-    }
-
 </style>

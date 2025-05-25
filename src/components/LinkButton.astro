@@ -1,15 +1,26 @@
 ---
+import { FaArrowUpRightFromSquare } from 'react-icons/fa6';
+
 interface Props {
     href: string;
     external?: boolean;
+    showIcon?: boolean;
+    title?: string;
+    spacing?: boolean;
 }
 
-const { href, external } = Astro.props;
+const { href, external, title, showIcon = true, spacing = true } = Astro.props;
 ---
 
-<a class="link-button" href={ href }>
-    <slot /> <i style=`display: ${external ? "initial" : "none"}` 
-                class="nf nf-oct-arrow_up_right" />
+<a class=`link-button ${spacing ? "space" : ""}` {href} 
+    target={external ? "_blank" : "_self"} {title}>
+
+    <slot />
+    <FaArrowUpRightFromSquare className="external-icon" style={{
+        display: showIcon && external ? "initial" : "none",
+        marginLeft: 6,
+        marginTop: 3
+    }} />
 </a>
 
 <style lang="scss">
@@ -18,29 +29,40 @@ const { href, external } = Astro.props;
 
     a {
         display: inline-flex;
-        margin-inline: 8px;
-        font-size: normal;
+        font-size: 1.04em;
         font-weight: 600;
-        width: fit-content;
-        box-sizing: content-box;
         color: inherit;
         
-        border: solid 0.032em colors.$accent-color;
-        padding: 5px 8px;
+        box-shadow: inset 0 0 0 1px colors.$accent-color-dark;
         border-radius: 12px;
         text-decoration: none;
-        -webkit-tap-highlight-color: transparent;
         transition: 150ms linear;
 
-        &:hover {
-            color: white;
-            background-color: colors.$accent-color-dark;
-        }
-    }
+        &.space {
+            padding: 8px 10px;
+            margin-inline: 8px;
 
-    body.light a:hover {
-        color: black;
-        background-color: colors.$accent-color;
+            &:hover {
+                color: white;
+                border-width: 2px;
+                background-color: colors.$accent-color-dark;
+
+                body.light & {
+                    box-shadow: inset 0 0 0 1px colors.$accent-color-dark;
+                    background-color: colors.$accent-color-dark;
+                }
+            }
+        }
+
+        &:not(.space) {
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            box-shadow: none;
+
+            &:hover {
+                text-decoration-color: colors.$accent-color-dark;
+            }
+        }
     }
 </style>
 

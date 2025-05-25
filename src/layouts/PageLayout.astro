@@ -1,43 +1,54 @@
 ---
-import Footer from "../components/Footer.astro";
-import Navigation from "../components/Navigation.astro";
 import "../styles/global.scss";
+
+import Footer from "../components/Footer.astro";
+import Navigation from "../components/Navigation.tsx";
+
+import { defaultLang } from "../i18n/ui";
+import { getLanguageFromURL } from "../i18n/utils";
 
 interface Props {
     title: string;
     icon?: string;
+    navSpacing?: string;
+    sideSpacing?: string;
+    flex?: boolean;
+    flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
+    pfpOnNavigation?: boolean;
 }
-const { title, icon } = Astro.props;
+const {
+    title, icon, navSpacing = "3em",
+    sideSpacing = "2em",
+    flex, pfpOnNavigation = true, 
+    flexDirection = "row"
+} = Astro.props;
 ---
 
-<html lang="en">
+<html lang={Astro.params.lang ?? defaultLang}>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{ title }</title>
         <link rel="icon" href={ icon ?? 
-                "https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=32"
-            } />
+            "https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=32"
+        } />
     </head>
 
-    <body id="rootBody">
+    <body>
         <script>
-            (document.getElementById("rootBody") as HTMLBodyElement
-                ).className = localStorage.getItem("theme") ?? "dark";
+            document.body!.classList.add(localStorage.getItem("theme") ?? "dark");
         </script>
-        <Navigation />
 
-        <div class="content">
+            <Navigation client:load lang={getLanguageFromURL(Astro.url) ?? "en"} 
+            showLanguageSelector={true} showProfilePic={pfpOnNavigation} />
+
+            <div class="content" style=`padding-top: ${navSpacing
+                }; display: ${flex ? "flex" : "block"
+                }; flex-direction: ${flexDirection}; padding-left: ${sideSpacing
+            }; padding-right: ${sideSpacing}`>
             <slot />
         </div>
+
         <Footer />
     </body>
-
-    <style>
-        
-        .content {
-            padding-inline: 7%;
-        }
-
-    </style>
 </html>

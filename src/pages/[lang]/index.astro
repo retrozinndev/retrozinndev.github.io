@@ -1,53 +1,142 @@
 ---
+import { Image } from "astro:assets";
 import { getStaticPaths } from "../../i18n/route.ts";
 import { useTranslations }  from "../../i18n/utils.ts";
-import SocialLinks from '../../components/SocialLinks.astro';
 import PageLayout from '../../layouts/PageLayout.astro';
+import SocialLinks from "../../components/SocialLinks.astro";
 import LinkButton from "../../components/LinkButton.astro";
-import "../../styles/_colors.scss";
+import ProjectsComponent from "../../components/ProjectsComponent.astro";
+import { projects } from "./projects.astro";
 
 export { getStaticPaths };
 const tr = useTranslations(Astro.params.lang as never);
 ---
 
-<PageLayout title={ "retrozinndev - Home" }>
+<PageLayout title={ "retrozinndev - Home" } navSpacing="4em" sideSpacing="4px" flex={true} sideSpacing="8px">
+    <div class="block">
+        <div class="flex">
+            <div class="card">
+                <div class="image-container">
+                    <Image src={"https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=1920"} 
+                    width={512} format="webp" height={512} alt={"Profile Picture"} class={"image"} loading={"lazy"} />
+                </div>
 
-    <div class="container">
-        <div class="about-section title">
-            <h1>{ tr("about.title")  } <span class="highlight">João!</span> </h1>
+                <div class="info">
+                    <h1 class="greeting">{tr("about.title")} <span class="highlight">João!</span></h1>
+                    <p class="about"> {
+                        tr("about.description")
+                    } </p>
+
+                    <h2 class="socials">{tr("about.socials_title")}</h2>
+                    <div class="socials">
+                        <SocialLinks />
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="about" id="about">
-            <p>{ tr("about.description") }</p>
-        </div>
-        <br>
-        <LinkButton href=`/${Astro.params.lang}/projects`>
-            { tr("about.projects") } <i class="nf nf-oct-arrow_up_right"></i>
-        </LinkButton>
-        <br>
-        <div class="socials ul" id="socials">
-            <h2>{ tr("about.socials_title") }</h2>
-            <SocialLinks showDiscordEmbed={false} />
+    
+        <div class="projects-container">
+            <h1>{ tr("projects.title") }</h1>
+            <p>
+                { tr("projects.description") } 
+                <LinkButton href="https://github.com/retrozinndev?tab=repositories" external={true} spacing={false}>GitHub</LinkButton>
+            </p>
+            <div class="projects">
+                <ProjectsComponent {projects} />
+            </div>
         </div>
     </div>
 
-    <style>
-        .container {
-            font-weight: 500;
+    <style lang="scss">
+        @use "../../styles/colors";
+
+        .block {
+            display: block;
         }
 
-        #projects {
-            display: inline-flex;
-            font-size: larger;
-            font-weight: 600;
+        .flex {
+            display: flex;
+            width: 100%;
         }
 
-        p {
-            font-size: 1.05em;
-            line-height: 1.3rem;
+        .projects-container {
+            margin-inline: 1em;
         }
 
-        h1 {
-            font-size: 40px;
+        .card {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            background-color: colors.$bg-navbar-color-dark;
+            padding: 24px;
+            border-radius: 48px;
+            margin-bottom: 3.1em;
+
+            & .image-container {
+                display: flex;
+            }
+
+            & .image {
+                border-radius: 32px;
+                margin-right: 5em;
+            }
+
+            & h1.greeting {
+                font-size: 2.9em;
+            }
+
+            & p.about {
+                font-weight: 300;
+                font-size: 1.2em;
+                margin-bottom: 3em;
+            }
+        }
+
+        body.light .card {
+            background-color: colors.$bg-navbar-color-light;
+        }
+
+        @media (max-width: 1100px) {
+            .card .image-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                & .image {
+                    width: 256px;
+                    height: 256px;
+                    margin-right: 2.5em;
+                }
+            }
+        }
+
+        @media (max-width: 800px) {
+            .card {
+                display: block;
+
+                & .image-container {
+                    display: flex;
+
+                    & .image {
+                        width: 100%;
+                        height: 100%;
+                        margin-right: 0;
+                    }
+                }
+
+                & h1, h2 {
+                    text-align: center;
+                }
+
+                & div.socials {
+                    display: flex;
+                    margin-inline: auto;
+
+                    &:last-child {
+                        display: block;
+                    }
+                }
+            }
         }
     </style>
 </PageLayout>
