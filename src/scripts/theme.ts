@@ -11,7 +11,10 @@ export function getThemes(): Array<string> {
 }
 
 export function getStoredTheme(): (string|undefined) {
-    return localStorage.getItem("theme")?.toString();
+    if(typeof localStorage !== "undefined")
+        return localStorage.getItem("theme")?.toString() ?? getThemes()[0];
+
+    return getThemes()[0];
 }
 
 export function toggleTheme(): void {

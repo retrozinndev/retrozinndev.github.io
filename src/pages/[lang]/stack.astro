@@ -2,36 +2,102 @@
 import { getStaticPaths } from "../../i18n/route.ts";
 import PageLayout from "../../layouts/PageLayout.astro";
 import LinkButton from "../../components/LinkButton.astro";
+import type { IconType } from "react-icons";
+import { BiLogoCss3, BiLogoGit, BiLogoGithub, BiLogoHtml5, BiLogoJava, BiLogoSass, BiLogoTypescript } from "react-icons/bi";
+import { SiAstro } from "react-icons/si";
 
 export { getStaticPaths };
+
+type Tech = {
+    name: string;
+    icon: IconType;
+    href?: (string|URL);
+};
+
+const techs: Record<string, Array<Tech>> = {
+    languages: [
+        {
+            name: "TypeScript",
+            icon: BiLogoTypescript,
+            href: "https://www.typescriptlang.org"
+        },
+        {
+            name: "Java",
+            icon: BiLogoJava,
+            href: "https://dev.java"
+        }
+    ],
+    frameworks_libraries: [
+        {
+            name: "Astro",
+            icon: SiAstro,
+            href: "https://astro.build"
+        },
+        {
+            name: "HTML5",
+            icon: BiLogoHtml5,
+            href: "https://developer.mozilla.org/docs/Web/HTML"
+        },
+        {
+            name: "CSS3",
+            icon: BiLogoCss3,
+            href: "https://developer.mozilla.org/docs/Web/CSS"
+        },
+        {
+            name: "Sass/Scss",
+            icon: BiLogoSass,
+            href: "https://sass-lang.com"
+        }
+    ],
+    others: [
+        {
+            name: "GitHub",
+            icon: BiLogoGithub,
+            href: "https://github.com"
+        },
+        {
+            name: "Git",
+            icon: BiLogoGit,
+            href: "https://git-scm.com"
+        }
+    ]
+};
 ---
 
 <PageLayout title="retrozinndev - Tech Stack">
     <h1>Tech Stack</h1>
     <p>This is my knowlege stack! It contains the technologies that I've learned until today. Not much yet, I know.</p>
 
-    <h2 id="languages">Languages</h2>
-    <LinkButton href="https://openjdk.org"><i class="nf nf-fa-java"></i>Java</LinkButton>
-    <LinkButton href="https://typescriptlang.org"><i class="nf nf-md-language_typescript"></i>TypeScript</LinkButton>
-    <LinkButton href="https://learn.microsoft.com/dotnet/csharp/"><i class="nf nf-md-language_csharp"></i>CSharp</LinkButton>
+    <h2 id="languages">Languages</h2> {
+        techs["languages"].map((lang) => 
+            <LinkButton href={typeof lang.href === "string" ?
+                        lang.href : (lang.href?.toString() ?? "") } 
+                        title={`${lang.name} Website`} showIcon={false}>
 
-    <h2 id="other-languages">Other Technologies</h2>
-    <LinkButton href="https://developer.mozilla.org/docs/Web/HTML"><i class="nf nf-fa-html5"></i>HTML</LinkButton>
-    <LinkButton href="https://developer.mozilla.org/docs/Web/CSS"><i class="nf nf-seti-css"></i>CSS</LinkButton>
-        <LinkButton href="https://astro.build"><i class="nf nf-custom-astro"></i>Astro</LinkButton>
+                <lang.icon size={18} style={{ marginTop: 2, marginRight: 4 }} />
+                { lang.name }
+            </LinkButton>)
+    }
 
-    <h2 id="others">Others</h2>
+    <h2 id="libraries">Frameworks / Libraries</h2> {
+        techs["frameworks_libraries"].map((lib) => 
+            <LinkButton href={typeof lib.href === "string" ?
+                        lib.href : (lib.href?.toString() ?? "") } 
+                        title={`${lib.name} Website`} showIcon={false}>
 
-    <LinkButton href="https://git-scm.com"><i class="nf nf-md-git"></i>Git</LinkButton>
-        <LinkButton href="https://github.com"><i class="nf nf-md-github"></i>GitHub</LinkButton> 
+                <lib.icon size={18} style={{ marginTop: 2, marginRight: 4 }} />
+                { lib.name }
+            </LinkButton>)
+    }
 
-    <style>
+    <h2 id="others">Others</h2> {
+        techs["others"].map((tech) => 
+            <LinkButton href={typeof tech.href === "string" ?
+                        tech.href : (tech.href?.toString() ?? "") } 
+                        title={`${tech.name} Website`} showIcon={false}>
 
-        i.nf {
-            margin-block: 3px;
-            margin-inline: 3px;
-        }
-
-    </style>
-
+                <tech.icon size={18} style={{ marginTop: 2, marginRight: 4 }} />
+                { tech.name }
+            </LinkButton>)
+    }
 </PageLayout>

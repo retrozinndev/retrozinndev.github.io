@@ -1,48 +1,11 @@
 ---
-import { useTranslations } from "../i18n/utils";
 import ProjectCard, { type Project } from "./ProjectCard.astro";
 
-const tr = useTranslations(Astro.params.lang as never || "en");
+interface Props {
+    projects: Array<Project>;
+}
 
-const projects: Array<Project> = [
-    {
-        title: "colorshell",
-        developer: "retrozinndev",
-        description: "Super cool desktop shell for Hyprland!",
-        href: "https://github.com/retrozinndev/colorshell"
-    },
-    {
-        title: "retrozinndev.github.io",
-        developer: "retrozinndev",
-        description: "My personal website",
-        href: "https://github.com/retrozinndev/retrozinndev.github.io"
-    },
-    {
-        title: "parceirtoti.github.io",
-        developer: "parceiroti",
-        description: "ParceiroTI's website redesign",
-        href: "https://github.com/parceiroti/parceiroti.github.io"
-    },
-    {
-        title: "UpDateN'Time",
-        developer: "retrozinndev",
-        description: "A Tool that synchronizes your date and time with the internet",
-        href: "https://github.com/retrozinndev/UpDateNTime"
-    },
-    {
-        title: "The Traveler",
-        developer: "notestudios",
-        description: "A two-dimensional shooter game",
-        href: "https://github.com/notestudios/TheTraveler"
-    },
-    {
-        title: "Space Shooter",
-        developer: "notestudios",
-        description: "Shoot meteors in Space!",
-        href: "https://github.com/notestudios/SpaceShooter"
-    }
-];
-
+const { projects } = Astro.props;
 ---
 
 <div class="projects"> {

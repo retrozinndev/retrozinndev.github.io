@@ -1,0 +1,124 @@
+@use "sass:color";
+@use "../colors";
+
+$padding-around: 2px;
+
+@function calcStickyTop($padd) {
+  @if($padd < 2px) {
+    @return calc($padd * 2 + 2);
+  }
+
+  @return calc($padd * 2);
+}
+
+.navigation-bar {
+  position: sticky;
+  display: block;
+  padding: {
+    left: $padding-around;
+    right: $padding-around;
+    top: $padding-around;
+  };
+
+  max-width: 100%;
+  top: calcStickyTop($padding-around);
+  z-index: 10;
+}
+
+#navbar {
+  display: flex;
+  border-radius: 22px;
+  backdrop-filter: blur(40px);
+  font-size: medium;
+  padding: 6px 20px;
+  min-height: 60px;
+  transition: 120ms ease-in-out;
+
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+
+  & .items {
+    display: flex;
+    width: 100%;
+    flex: 1 1 0;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    & > .item {
+      margin: 2px;
+      padding: 6px 8px;
+      border-radius: 12px;
+      transition: 200ms ease-in-out;
+
+      &, & * {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      & *:is(a) {
+        all: unset;
+        -webkit-tap-highlight-color: unset;
+        color: inherit;
+        font-weight: 600;
+        font-size: 1.05em;
+      }
+
+      &:has(> a):hover, 
+      &:has(> a).current {
+        background: colors.$accent-color-dark;
+        cursor: pointer;
+      }
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.navigation {
+  background: color.scale($color: colors.$bg-navbar-color-dark, $alpha: -20%);
+}
+
+body.light .navigation {
+  background-color: color.scale($color: colors.$bg-navbar-color-light, $alpha: -20%);
+}
+
+body.dark .navigation.scrolled {
+  box-shadow: 0 0 25px 2px rgba($color: black, $alpha: .6);
+}
+
+body.light .navigation.scrolled {
+  box-shadow: 0 0 5px 2px rgba($color: darkgray, $alpha: .6);
+}
+
+.left-side {
+  & img {
+    border-radius: 8px;
+  }
+}
+
+.language-selector > * {
+  outline: none;
+  background: none;
+  box-shadow: none;
+  border: 1px solid gray;
+  padding-inline: 10px;
+  padding-block: 4px;
+  border-radius: 8px;
+}
+
+@media screen and (max-width: 700px) {
+  #navbar {
+    padding-block: 14px;
+    justify-content: center;
+
+    & .items {
+      flex: unset;
+    }
+  }
+}

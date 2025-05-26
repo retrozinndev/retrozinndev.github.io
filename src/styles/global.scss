@@ -1,5 +1,6 @@
-@use "./colors";
+@use "sass:color";
 @use "./fonts";
+@use "./colors";
 
 html {
     font-family: Noto Sans, Segoe UI, sans-serif;
@@ -53,10 +54,6 @@ h3 {
     font-size: 18px;
 }
 
-.nf {
-  font-family: "Nerd Font Symbols";
-}
-
 .center {
     width: 100%;
     text-align: center;
@@ -66,16 +63,14 @@ h3 {
     transform: translate(0, -50%);
 }
 
-.highlight {
-    position: flex;
-    font-style: bolder;
+span.highlight {
     font-weight: bolder;
-    color: colors.$accent-color;
+    color: colors.$accent-color-dark;
     transition: ease-in-out 500ms;
 }
 
-.highlight:hover {
-    color: colors.$accent-color;
+body.light span.highlight {
+  color: color.scale($color: colors.$accent-color-dark, $lightness: 12%);
 }
 
 iframe {

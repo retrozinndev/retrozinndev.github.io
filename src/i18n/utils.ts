@@ -2,14 +2,12 @@
 import type { i18nStruct } from "./struct.ts";
 import { languages, i18n, defaultLang } from "./ui.ts";
 
-export function getLanguageFromURL(url: (URL|string)): (string) {
-    const splittedURL: string[] = (typeof url === "string") ? 
-        url.split('/')
-    : url.pathname.split("/");
+export function getLanguageFromURL(url: URL): (string|undefined) {
+    const splitPath = url.pathname.split('/', 2);
 
-    return splittedURL[1].length !== 2 ?
-        defaultLang
-    : splittedURL[1];
+    return (splitPath[1] ?? false) && splitPath[1].length <= 5 ?
+        splitPath[1]
+    : undefined;
 }
 
 export function useTranslations(lang: string): Function {
