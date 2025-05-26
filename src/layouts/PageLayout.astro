@@ -5,11 +5,11 @@ import Footer from "../components/Footer.astro";
 import Navigation from "../components/Navigation.tsx";
 
 import { defaultLang } from "../i18n/ui";
-import { getLanguageFromURL } from "../i18n/utils";
 
 interface Props {
     title: string;
     icon?: string;
+    lang?: string;
     navSpacing?: string;
     sideSpacing?: string;
     flex?: boolean;
@@ -20,11 +20,11 @@ const {
     title, icon, navSpacing = "3em",
     sideSpacing = "2em",
     flex, pfpOnNavigation = true, 
-    flexDirection = "row"
+    flexDirection = "row", lang = (Astro.params.lang ?? defaultLang)
 } = Astro.props;
 ---
 
-<html lang={Astro.params.lang ?? defaultLang}>
+<html {lang}>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,8 +39,8 @@ const {
             document.body!.classList.add(localStorage.getItem("theme") ?? "dark");
         </script>
 
-            <Navigation client:load lang={getLanguageFromURL(Astro.url) ?? "en"} 
-            showLanguageSelector={true} showProfilePic={pfpOnNavigation} />
+            <Navigation client:load {lang} showLanguageSelector={true} 
+                        showProfilePic={pfpOnNavigation} />
 
             <div class="content" style=`padding-top: ${navSpacing
                 }; display: ${flex ? "flex" : "block"
