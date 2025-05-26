@@ -1,21 +1,18 @@
 ---
 import { Image } from "astro:assets";
-import { getLanguages, getLanguageFromURL, useTranslations } from "../i18n/utils";
+import { getLanguageFromURL, useTranslations } from "../i18n/utils";
 import PageLayout from "../layouts/PageLayout.astro";
+import { defaultLang, languages } from "../i18n/ui";
 
-Astro.params.lang = "en";
+const urlLang = getLanguageFromURL(Astro.url);
+const lang = urlLang && languages.includes(urlLang, 0) ? 
+    urlLang
+: defaultLang;
 
-getLanguages().forEach(intl => {
-    if(getLanguageFromURL(Astro.url) !== intl) 
-        return;
-
-    Astro.params.lang = intl;
-});
-
-const tr = useTranslations(Astro.params.lang);
+const tr = useTranslations(lang);
 ---
 
-<PageLayout title="retrozinndev | 404!">
+<PageLayout title="retrozinndev | 404!" {lang}>
     <div class="not-found">
         <div class="flowbox">
             <div class="image-container">
