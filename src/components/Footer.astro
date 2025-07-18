@@ -1,13 +1,17 @@
 ---
+import { FaHeart } from "react-icons/fa6";
 import { useTranslations } from "../i18n/utils";
+import LinkButton from "./LinkButton.astro";
 
 const lang = (Astro.params.lang || "en") as never;
 const tr = useTranslations(lang);
 ---
 
 <footer class="footer">
-    { tr("footer.txt1") } <i class="nf nf-fa-heart"></i> { tr("footer.txt2") }
-     · <a href="https://github.com/retrozinndev/retrozinn.dev">{ tr("footer.txt3") }</a>
+    { tr("footer.txt1") } <FaHeart size={10} /> { tr("footer.txt2") }
+    · <LinkButton external={true} spacing={false} href="https://github.com/retrozinndev/retrozinn.dev">
+    { tr("footer.txt3") }
+    </a>
 </footer>
 
 <style lang="scss">

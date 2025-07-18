@@ -45,27 +45,24 @@ $padding-around: 2px;
     flex-wrap: wrap;
     justify-content: center;
 
-    & > .item {
+    & > .item a {
+      -webkit-tap-highlight-color: transparent;
+      text-decoration: none;
       margin: 2px;
       padding: 6px 8px;
       border-radius: 12px;
       transition: 200ms ease-in-out;
+      color: inherit;
+      font-weight: 600;
+      font-size: 1.05em;
+      text-decoration-line: underline;
+      text-decoration-thickness: 2px;
+      text-decoration-color: transparent;
+      text-underline-offset: 3px;
 
-      &, & * {
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      & *:is(a) {
-        all: unset;
-        -webkit-tap-highlight-color: unset;
-        color: inherit;
-        font-weight: 600;
-        font-size: 1.05em;
-      }
-
-      &:has(> a):hover, 
-      &:has(> a).current {
-        background: colors.$accent-color-dark;
+      &:hover, 
+      &.current {
+        text-decoration-color: inherit;
         cursor: pointer;
       }
     }
