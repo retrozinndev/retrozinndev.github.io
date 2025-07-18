@@ -1,12 +1,12 @@
 import "../styles/components/Navigation.scss";
 
 import { useEffect, useState, type ReactElement } from "react";
-
 import { useTranslations } from "../i18n/utils";
 import { defaultLang } from "../i18n/ui";
+
 import ToggleThemeButton from "./ToggleThemeButton";
 import LanguageSelector from "./LanguageSelector";
-import { AstroJSX } from "astro/jsx-runtime";
+
 
 interface Props {
     lang?: string;
@@ -63,6 +63,7 @@ export default function(props: Props): ReactElement {
         window.addEventListener("scroll", handleScroll);
     });
 
+
     return <div className="navigation-bar">
         <nav className={`navigation ${scrolled ? "scrolled" : ""}`} id="navbar" 
              aria-label="Navigation Bar" onScroll={() => {
@@ -75,25 +76,34 @@ export default function(props: Props): ReactElement {
             }}>
 
             <div className="left-side"> {
-                showProfilePic ? 
-                    <a rel="author" href="https://github.com/retrozinndev">
-                        <img className="profile-pic" 
-                               src="https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=80"
-                               width={32} height={32} alt={ tr("nav.home") } loading="lazy" />
-                    </a>
-                : null
+                showProfilePic ? <a rel="author" href="https://github.com/retrozinndev">
+                    <img className="profile-pic" 
+                      src="https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=80"
+                      width={32} height={32} alt={ tr("nav.home") } loading="lazy" 
+                    />
+                </a> : null
             } </div>
 
             <div className="items" > {
-                    pages.map((page, i) => (
-                        <div className="item" key={i}>
-                            <a href={`${page.hasI18n ? `/${lang}` : ""}${page.href}`} 
-                               target="_self" title={ tr(`nav.${page.name}_tooltip`) }>{ 
+                    pages.map((page, i) => 
+                        <div className={`item`} key={i} onLoadStart={e => {
+                            const currentPage = (page.hasI18n ? 
+                                window.location.pathname.replace(/^\/.*(\/)/, "/") 
+                            : window.location.pathname).trimEnd().replace(/\/$/, "").concat(
+                                window.location.hash.startsWith('#') ?
+                                    window.location.hash
+                                : window.location.hash.replace(/^./, "\#&")
+                            ).trim();
 
+                            if(currentPage === page.href.toString()) 
+                                (e.target as HTMLDivElement).classList.add("current");
+                        }}>
+                            <a href={`${page.hasI18n ? `/${lang}` : ""}${page.href}`} target="_self" 
+                              title={ tr(`nav.${page.name}_tooltip`) }> {
                                 tr(`nav.${page.name}`)
                             } </a>
                         </div>
-                    ))
+                    )
                 }
 
                 <div className="item" key={pages.length}>
