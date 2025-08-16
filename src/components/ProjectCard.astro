@@ -1,25 +1,33 @@
 ---
 import { Image } from "astro:assets";
+import { FaRegStar } from "react-icons/fa6";
 
-export interface Project {
-    icon?: string;
-    developer: string;
-    title: string;
+interface Props {
+    icon: string;
     description: string;
+    title: string;
+    developer: string;
     href: string;
+    stars: number;
 }
 
-const { icon, developer, title, description, href } = Astro.props;
+const { icon, developer, title, description, href, stars } = Astro.props;
 ---
 
-<div class="project-card" id="projectCard" data-href={ href }>
+<div class="project-card" id="projectCard" onclick={`window.open("${href}", "_blank")`}>
     <div class="developer">
-        <Image class="icon" src={ icon ?? 
-                `https://github.com/${developer}.png?size=72`
-            }  alt="dev profile picture" width={32} height={32} loading={"lazy"}
-             />
+        <Image class="icon" src={
+              icon ?? `https://github.com/${developer}.png?size=72`
+          } alt="dev profile picture" width={32} height={32} loading={"lazy"}
+        />
 
         <span class="developer-name">{ developer }</span>
+        <div class="stars" style={`display: ${stars > 0 ? "inline-flex" : "none"}`}>
+            {stars}
+            <FaRegStar width={16} size={14} style={{
+                marginLeft: 2
+            }} />
+        </div>
     </div>
     <h1>{ title }</h1>
     <p>
@@ -27,14 +35,6 @@ const { icon, developer, title, description, href } = Astro.props;
     </p>
 </div>
 
-<script>
-    const projectCard = document.getElementById("projectCard") as HTMLDivElement;
-
-    if(projectCard != undefined) {
-        projectCard.onclick = () => 
-            window.open(projectCard.getAttribute("data-href")!, "_blank");
-    }
-</script>
 
 <style lang="scss">
 
@@ -82,15 +82,37 @@ const { icon, developer, title, description, href } = Astro.props;
         margin-top: 6px;
     }
 
+    .stars {
+        display: inline-flex;
+        width: 100%;
+        font-size: 12px;
+        font-weight: 400;
+        color: lightgray;
+    }
+
+    body.light .stars {
+        color: color.adjust($color: gray, $lightness: -20%);
+    }
+
     .developer {
-        display: flex;
+        display: inline-flex;
+        width: 100%;
+        align-items: center;
 
         & .developer-name {
             font-size: 12px;
+            display: inline-flex;
             color: color.adjust($color: white, $lightness: -20%);
             font-weight: 600;
-            margin-block: auto;
+            width: 100%;
             margin-left: 6px;
+        }
+
+        & .stars {
+            display: inline-flex;
+            width: max-content;
+            align-items: center;
+            font-size: 12px;
         }
     }
 

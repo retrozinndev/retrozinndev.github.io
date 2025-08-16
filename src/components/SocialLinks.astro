@@ -4,13 +4,17 @@ import { FaGithub, FaGitlab, FaXTwitter, FaReddit, FaDiscord } from "react-icons
 import { FiMail } from "react-icons/fi";
 import LinkButton from "./LinkButton.astro";
 
+interface Props {
+    style?: string;
+}
+
 type SocialLink = {
     name: string;
     href: string;
     icon: IconType
 };
 
-const socials: Array<SocialLink> = [
+export const socials: Array<SocialLink> = [
     {
         name: "GitHub",
         href: "https://github.com/retrozinndev",
@@ -42,19 +46,11 @@ const socials: Array<SocialLink> = [
         icon: FiMail
     }
 ];
+
+const { style } = Astro.props;
 ---
 
-<!-- Discord User Widget by vendicated (https://vendicated.dev/) -->
-<iframe id="discordEmbed"
-    title="Discord"
-    width={340}
-    height={120}
-    sandbox="allow-scripts"
-    style="display: none"
-    onclick=`window.open("${socials[2].href}", "_blank")`
- />
-
-<ul class="social-links"> {
+<ul class="social-links" style={style}> {
     socials.map(social => 
         <li class="social-link">
             <LinkButton href={social.href} external={true} 
@@ -89,7 +85,14 @@ const socials: Array<SocialLink> = [
     .social-links {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         list-style: none;
         padding: 0;
+    }
+
+    @media screen and (max-width: 800px) {
+        .social-links {
+            justify-content: center;
+        }
     }
 </style>

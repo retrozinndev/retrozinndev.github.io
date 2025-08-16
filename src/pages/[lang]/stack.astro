@@ -5,13 +5,14 @@ import LinkButton from "../../components/LinkButton.astro";
 import type { IconType } from "react-icons";
 import { BiLogoCss3, BiLogoGit, BiLogoGithub, BiLogoHtml5, BiLogoJava, BiLogoSass, BiLogoTypescript } from "react-icons/bi";
 import { SiAstro } from "react-icons/si";
+import { SiGtk } from "react-icons/si";
 
 export { getStaticPaths };
 
 type Tech = {
     name: string;
     icon: IconType;
-    href?: (string|URL);
+    href?: string;
 };
 
 const techs: Record<string, Array<Tech>> = {
@@ -27,11 +28,16 @@ const techs: Record<string, Array<Tech>> = {
             href: "https://dev.java"
         }
     ],
-    frameworks_libraries: [
+    frameworks__libraries: [
         {
             name: "Astro",
             icon: SiAstro,
             href: "https://astro.build"
+        },
+        {
+            name: "GTK",
+            icon: SiGtk,
+            href: "https://gtk.org"
         },
         {
             name: "HTML5",
@@ -44,7 +50,7 @@ const techs: Record<string, Array<Tech>> = {
             href: "https://developer.mozilla.org/docs/Web/CSS"
         },
         {
-            name: "Sass/Scss",
+            name: "Sass",
             icon: BiLogoSass,
             href: "https://sass-lang.com"
         }
@@ -66,38 +72,40 @@ const techs: Record<string, Array<Tech>> = {
 
 <PageLayout title="retrozinndev - Tech Stack">
     <h1>Tech Stack</h1>
-    <p>This is my knowlege stack! It contains the technologies that I've learned until today. Not much yet, I know.</p>
+    <p>This is my knowlege stack! It contains the technologies that I've been using until today.</p>
 
-    <h2 id="languages">Languages</h2> {
-        techs["languages"].map((lang) => 
-            <LinkButton href={typeof lang.href === "string" ?
-                        lang.href : (lang.href?.toString() ?? "") } 
-                        title={`${lang.name} Website`} showIcon={false}>
+    {
+        Object.keys(techs).map(key => {
+            const title = key.replace(/__/g, " / ").replace(/^./, (s) => s.toUpperCase())
+                .replace(/_/, '\s').replace(/ (.)/g, (_, c) => ` ${c.toUpperCase()}`);
+            const list = techs[key as keyof typeof techs];
 
-                <lang.icon size={18} style={{ marginTop: 2, marginRight: 4 }} />
-                { lang.name }
-            </LinkButton>)
-    }
+            return <div class="techs-list" id={key}>
+                <h2 class="title">{title}</h2>
+                <div class="techs">
+                    {
+                        list.map(tech => 
+                            <LinkButton href={tech.href ?? ""} 
+                              title={`Go to the website for ${tech.name}`} showIcon={false}>
 
-    <h2 id="libraries">Frameworks / Libraries</h2> {
-        techs["frameworks_libraries"].map((lib) => 
-            <LinkButton href={typeof lib.href === "string" ?
-                        lib.href : (lib.href?.toString() ?? "") } 
-                        title={`${lib.name} Website`} showIcon={false}>
-
-                <lib.icon size={18} style={{ marginTop: 2, marginRight: 4 }} />
-                { lib.name }
-            </LinkButton>)
-    }
-
-    <h2 id="others">Others</h2> {
-        techs["others"].map((tech) => 
-            <LinkButton href={typeof tech.href === "string" ?
-                        tech.href : (tech.href?.toString() ?? "") } 
-                        title={`${tech.name} Website`} showIcon={false}>
-
-                <tech.icon size={18} style={{ marginTop: 2, marginRight: 4 }} />
-                { tech.name }
-            </LinkButton>)
+                                <tech.icon size={18} style={{ 
+                                    marginTop: 0, marginRight: 4
+                                }} />
+                                {tech.name}
+                            </LinkButton>
+                        )
+                    }
+                </div>
+            </div>
+        })
     }
 </PageLayout>
+
+<style>
+    .techs {
+        display: flex;
+        flex-wrap: wrap;
+        line-height: 1.6em;
+        height: min-content;
+    }
+</style>
