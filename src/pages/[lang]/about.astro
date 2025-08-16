@@ -1,0 +1,62 @@
+---
+import { getStaticPaths } from "../../i18n/route";
+import LinkButton from "../../components/LinkButton.astro";
+import PageLayout from "../../layouts/PageLayout.astro";
+
+export { getStaticPaths };
+---
+
+<PageLayout title="About">
+    <div class="block">
+        <h1>About</h1>
+        <p>
+        I'm a high school student from Brazil.
+        I absolutely love open-source and programming stuff!
+        </p>
+
+        <h2>Journey</h1>
+        <p>
+        I've been learning a lot stuff about programming and GNU/Linux since 2022.
+        </p>
+        <p>
+            I've been using GNU/Linux as my primary operating system since last year, with 
+            <LinkButton href="https://fedoraproject.org/workstation" spacing={false} external>
+                Fedora Workstation
+            </LinkButton> and 
+            then in the start of this year, moving to 
+            <LinkButton href="https://archlinux.org" external spacing={false}>
+                Arch Linux
+            </LinkButton>.
+        </p>
+
+        <h2>Interests</h2>
+        <p>
+            Besides tech, I really like watching Anime! I am a guy that really likes slice of life, 
+            romance, comedy and drama 😜, my favorite shows are 
+            <a href="https://pt.wikipedia.org/wiki/Oshi_no_Ko">Oshi no Ko</a>, 
+            <a href="https://pt.wikipedia.org/wiki/Bocchi_the_Rock!">Bocchi The Rock!</a> and 
+            <a href="https://pt.wikipedia.org/wiki/Kaoru_Hana_wa_Rin_to_Saku">The Fragrant Flower Blooms with Dignity</a>.
+        </p>
+        <LinkButton external href="https://myanimelist.net/profile/retrozinndev">
+            My Anime List
+        </LinkButton>
+
+        <h2>Recent Projects</h2>
+        <p>
+            I started working on a Desktop Environment recently, called 
+            <a href="https://github.com/retrozinndev/colorshell">colorshell</a>.
+            It's made to be used with the 
+            <LinkButton href="https://hypr.land" external spacing={false}>
+                Hyprland Wayland Compositor
+            </LinkButton>,
+            making usage of amazing technologies like GnomeJS, TypeScript, GTK 4, AGS and the Astal Libraries to create a nice environment for your desktop.
+        </p>
+        <p>
+            There's also a music player I've been working on, but it's a little bit abandoned for now. 
+            Still, I have a lot of ideas for it, so I won't be completely abandoning the app!!
+            <br>
+            The Music Player is called <a href="https://github.com/retrozinndev/Vibe">Vibe</a>,
+            it's expected to use GnomeJS, GTK, Gnim and GStreamer to make things work.
+        </p>
+    </div>
+</PageLayout>

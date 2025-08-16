@@ -28,7 +28,7 @@ const pages: Array<Page> = [
     },
     {
         name: "about",
-        href: "/#about",
+        href: "/about",
         hasI18n: true
     },
     {

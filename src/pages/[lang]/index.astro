@@ -6,18 +6,24 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import SocialLinks from "../../components/SocialLinks.astro";
 import LinkButton from "../../components/LinkButton.astro";
 import ProjectsComponent from "../../components/ProjectsComponent.astro";
-import { projects } from "./projects.astro";
+import { getMyRepos } from "../../scripts/repos";
 
 export { getStaticPaths };
 const tr = useTranslations(Astro.params.lang as never);
+
+const highlightProjects = (await getMyRepos()).sort((rp1, rp2) =>
+    rp1.stargazers_count - rp2.stargazers_count
+).toSpliced(0, 6); // show the 6 most-starred repos
 ---
 
-<PageLayout title={ "retrozinndev - Home" } navSpacing="4em" sideSpacing="4px" flex={true} sideSpacing="8px">
+<PageLayout title={ "retrozinndev - Home" } navSpacing="4em" sideSpacing="4px" flex={true} 
+  sideSpacing="8px" pfpOnNavigation={false}>
+
     <div class="block">
         <div class="flex">
             <div class="card">
                 <div class="image-container">
-                    <Image src={"https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=1920"} 
+                    <Image src={"https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=900"} 
                     width={512} format="webp" height={512} alt={"Profile Picture"} class={"image"} loading={"lazy"} />
                 </div>
 
@@ -29,6 +35,14 @@ const tr = useTranslations(Astro.params.lang as never);
 
                     <h2 class="socials">{tr("about.socials_title")}</h2>
                     <div class="socials">
+                        <iframe
+                          title="Discord user embed"
+                          width="340"
+                          height="120"
+                          frameborder="0"
+                          sandbox="allow-scripts"
+                          src="https://widgets.vendicated.dev/user?id=568589231954591749&theme=dark&banner=true&full-banner=false&rounded-corners=true&discord-icon=false&badges=false&guess-nitro=false&"
+                        />
                         <SocialLinks />
                     </div>
                 </div>
@@ -42,7 +56,7 @@ const tr = useTranslations(Astro.params.lang as never);
                 <LinkButton href="https://github.com/retrozinndev?tab=repositories" external={true} spacing={false}>GitHub</LinkButton>
             </p>
             <div class="projects">
-                <ProjectsComponent {projects} />
+                <ProjectsComponent projects={highlightProjects} />
             </div>
         </div>
     </div>
@@ -97,6 +111,7 @@ const tr = useTranslations(Astro.params.lang as never);
             background-color: colors.$bg-navbar-color-light;
         }
 
+        /* medium */
         @media (max-width: 1100px) {
             .card .image-container {
                 display: flex;
@@ -111,6 +126,7 @@ const tr = useTranslations(Astro.params.lang as never);
             }
         }
 
+        /* small (generally phones) */
         @media (max-width: 800px) {
             .card {
                 display: block;
@@ -129,13 +145,9 @@ const tr = useTranslations(Astro.params.lang as never);
                     text-align: center;
                 }
 
-                & div.socials {
-                    display: flex;
-                    margin-inline: auto;
-
-                    &:last-child {
-                        display: block;
-                    }
+                & .socials {
+                    display: block;
+                    text-align: center;
                 }
             }
         }

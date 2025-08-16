@@ -1,19 +1,26 @@
 ---
-import ProjectCard, { type Project } from "./ProjectCard.astro";
+import type { Repository } from "../scripts/repos";
+import ProjectCard from "./ProjectCard.astro";
 
 interface Props {
-    projects: Array<Project>;
+    projects: Array<Repository>;
 }
 
 const { projects } = Astro.props;
 ---
 
 <div class="projects"> {
-    projects.map(project => (
+    projects.sort((pja, pjb) => pjb.stargazers_count - pja.stargazers_count).map(project => 
         <div class="item">
-            <ProjectCard {...project} />
+            <ProjectCard title={project.name} 
+              description={project.description}
+              href={project.html_url}
+              developer={project.owner.login}
+              icon={project.owner.avatar_url}
+              stars={project.stargazers_count}
+            />
         </div>
-    ))
+    )
 } </div>
 
 <style lang="scss">

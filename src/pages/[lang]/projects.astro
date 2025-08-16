@@ -1,52 +1,14 @@
 ---
 import ProjectsComponent from "../../components/ProjectsComponent.astro";
 import { getStaticPaths } from "../../i18n/route.ts";
-import { useTranslations } from "../../i18n/utils";
 import PageLayout from "../../layouts/PageLayout.astro";
-import type { Project } from "../../components/ProjectCard.astro";
-
+import { useTranslations } from "../../i18n/utils";
+import { getMyRepos } from "../../scripts/repos";
 export { getStaticPaths };
 
-const tr = useTranslations(Astro.params.lang as never);
 
-export const projects: Array<Project> = [
-    {
-        title: "colorshell",
-        developer: "retrozinndev",
-        description: "Super cool desktop shell for Hyprland!",
-        href: "https://github.com/retrozinndev/colorshell"
-    },
-    {
-        title: "retrozinndev.github.io",
-        developer: "retrozinndev",
-        description: "My personal website",
-        href: "https://github.com/retrozinndev/retrozinndev.github.io"
-    },
-    {
-        title: "parceirtoti.github.io",
-        developer: "parceiroti",
-        description: "ParceiroTI's website redesign",
-        href: "https://github.com/parceiroti/parceiroti.github.io"
-    },
-    {
-        title: "UpDateN'Time",
-        developer: "retrozinndev",
-        description: "A Tool that synchronizes your date and time with the internet",
-        href: "https://github.com/retrozinndev/UpDateNTime"
-    },
-    {
-        title: "The Traveler",
-        developer: "notestudios",
-        description: "A two-dimensional shooter game",
-        href: "https://github.com/notestudios/TheTraveler"
-    },
-    {
-        title: "Space Shooter",
-        developer: "notestudios",
-        description: "Shoot meteors in Space!",
-        href: "https://github.com/notestudios/SpaceShooter"
-    }
-];
+const tr = useTranslations(Astro.params.lang as never);
+const repos = await getMyRepos();
 ---
 
 <PageLayout title="retrozinndev's Projects">
@@ -57,7 +19,7 @@ export const projects: Array<Project> = [
         <a rel="_blank" href="https://github.com/retrozinndev?tab=repositories">GitHub</a>.
     </p>
     <div class="projects">
-        <ProjectsComponent {projects} />
+        <ProjectsComponent projects={repos} />
     </div>
 
     <style>
