@@ -1,6 +1,8 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig.json",
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
+    "module": "es2022",
     "jsx": "react-jsx",
     "jsxImportSource": "react"
   }
