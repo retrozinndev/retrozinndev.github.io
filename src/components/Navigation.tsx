@@ -99,9 +99,10 @@ export default function(props: Props): ReactElement {
                                 (e.target as HTMLDivElement).classList.add("current");
                         }}>
                             <a href={`${page.hasI18n ? `/${lang}` : ""}${page.href}`} target="_self" 
-                              title={ tr(`nav.${page.name}_tooltip`) }> {
-                                tr(`nav.${page.name}`)
-                            } </a>
+                              title={ tr(`nav.${page.name}_tooltip`) }>
+
+                                { tr(`nav.${page.name}`) }
+                            </a>
                         </div>
                     )
                 }

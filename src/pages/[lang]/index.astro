@@ -2,18 +2,21 @@
 import { Image } from "astro:assets";
 import { getStaticPaths } from "../../i18n/route.ts";
 import { useTranslations }  from "../../i18n/utils.ts";
+import { getMyRepos } from "../../scripts/repos";
 import PageLayout from '../../layouts/PageLayout.astro';
 import SocialLinks from "../../components/SocialLinks.astro";
 import LinkButton from "../../components/LinkButton.astro";
 import ProjectsComponent from "../../components/ProjectsComponent.astro";
-import { getMyRepos } from "../../scripts/repos";
+
 
 export { getStaticPaths };
-const tr = useTranslations(Astro.params.lang as never);
 
-const highlightProjects = (await getMyRepos()).sort((rp1, rp2) =>
+const tr = useTranslations(Astro.params.lang as never);
+const highlightProjects = (await getMyRepos()).filter((repo) => 
+    !repo?.archived
+).sort((rp1, rp2) =>
     rp1.stargazers_count - rp2.stargazers_count
-).toSpliced(0, 6); // show the 6 most-starred repos
+).toSpliced(0, 6); // show the 6 most-starred and not archived projects
 ---
 
 <PageLayout title={ "retrozinndev - Home" } navSpacing="4em" sideSpacing="4px" flex={true} 
