@@ -46,6 +46,7 @@ export async function getRepositories(): Promise<Array<Repository>> {
 
 export async function getMyRepos(): Promise<Array<Repository>> {
     return (await getRepositories()).filter(repo =>
-        repo.fork !== true
+        repo.fork !== true && // hide forks
+            repo.full_name !== repo.owner.login // hide special readme repo
     );
 }
