@@ -12,6 +12,7 @@ export type Repository = {
     language: string;
     stargazers_count: number;
     html_url: string;
+    archived: boolean;
     fork: boolean;
 };
 

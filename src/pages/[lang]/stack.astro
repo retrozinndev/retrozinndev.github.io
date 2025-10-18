@@ -1,5 +1,4 @@
 ---
-import { getStaticPaths } from "../../i18n/route.ts";
 import PageLayout from "../../layouts/PageLayout.astro";
 import LinkButton from "../../components/LinkButton.astro";
 import type { IconType } from "react-icons";
@@ -7,7 +6,8 @@ import { BiLogoCss3, BiLogoGit, BiLogoGithub, BiLogoHtml5, BiLogoJava, BiLogoSas
 import { SiAstro } from "react-icons/si";
 import { SiGtk } from "react-icons/si";
 
-export { getStaticPaths };
+
+export { getStaticPaths } from "../../i18n/route.ts";
 
 type Tech = {
     name: string;

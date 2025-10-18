@@ -1,7 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import { getStaticPaths } from "../../i18n/route.ts";
-import { useTranslations }  from "../../i18n/utils.ts";
+import { useTranslations }  from "../../i18n/utils";
 import { getMyRepos } from "../../scripts/repos";
 import PageLayout from '../../layouts/PageLayout.astro';
 import SocialLinks from "../../components/SocialLinks.astro";
@@ -9,7 +8,7 @@ import LinkButton from "../../components/LinkButton.astro";
 import ProjectsComponent from "../../components/ProjectsComponent.astro";
 
 
-export { getStaticPaths };
+export { getStaticPaths } from "../../i18n/route";
 
 const tr = useTranslations(Astro.params.lang as never);
 const highlightProjects = (await getMyRepos()).filter((repo) => 
