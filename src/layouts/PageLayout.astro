@@ -1,10 +1,9 @@
 ---
 import "../styles/global.scss";
-
 import Footer from "../components/Footer.astro";
 import Navigation from "../components/Navigation.tsx";
-
 import { defaultLang } from "../i18n/ui";
+
 
 interface Props {
     title: string;
@@ -13,39 +12,47 @@ interface Props {
     navSpacing?: string;
     sideSpacing?: string;
     flex?: boolean;
+    maxWidth?: string;
     flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
     pfpOnNavigation?: boolean;
 }
+
 const {
     title, icon, navSpacing = "3em",
     sideSpacing = "2em",
+    maxWidth = "90em",
     flex, pfpOnNavigation = true, 
     flexDirection = "row", lang = (Astro.params.lang ?? defaultLang)
 } = Astro.props;
+
+const grAvatar = "https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=32";
 ---
 
-<html {lang}>
+<html lang={lang}>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{ title }</title>
-        <link rel="icon" href={ icon ?? 
-            "https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=32"
-        } />
+        <title>{title}</title>
+        <link rel="icon" href={icon ?? grAvatar} />
     </head>
 
     <body>
         <script>
-            document.body!.classList.add(localStorage.getItem("theme") ?? "dark");
+            import { getTheme } from "../scripts/theme";
+
+            document.body.classList.add(getTheme());
         </script>
 
-            <Navigation client:load {lang} showLanguageSelector={true} 
-                        showProfilePic={pfpOnNavigation} />
+            <Navigation client:load {lang} showLanguageSelector={true} showProfilePic={pfpOnNavigation} />
 
             <div class="content" style=`padding-top: ${navSpacing
                 }; display: ${flex ? "flex" : "block"
-                }; flex-direction: ${flexDirection}; padding-left: ${sideSpacing
-            }; padding-right: ${sideSpacing}`>
+                }; flex-direction: ${flexDirection
+                }; padding-left: ${sideSpacing
+                }; padding-right: ${sideSpacing
+                }; max-width: ${maxWidth
+                }; margin-inline: auto;`
+            >
             <slot />
         </div>
 

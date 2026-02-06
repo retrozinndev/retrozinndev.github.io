@@ -6,6 +6,27 @@ html {
     font-family: Noto Sans, Segoe UI, sans-serif;
     font-weight: 300;
     scroll-behavior: smooth;
+
+  .dark {
+    color-scheme: dark;
+    background-color: colors.$bg-color-dark;
+    color: white;
+
+    a:hover {
+      color: colors.$accent-color;
+    }
+  }
+
+  .light {
+    color-scheme: light;
+    
+    background-color: colors.$bg-color-light;
+    color: black;
+
+    a:hover {
+      color: colors.$accent-color-dark
+    }
+  }
 }
 
 body {
@@ -19,26 +40,6 @@ body {
     cursor: pointer;
     text-decoration: underline;
     font-weight: 600;
-  }
-
-  &.dark {
-    color-scheme: dark;
-    background-color: colors.$bg-color-dark;
-    color: white;
-
-    a:hover {
-      color: colors.$accent-color;
-    }
-  }
-
-  &.light {
-    color-scheme: light;
-    background-color: colors.$bg-color-light;
-    color: black;
-
-    a:hover {
-      color: colors.$accent-color-dark
-    }
   }
 }
 
@@ -69,7 +70,7 @@ span.highlight {
     transition: ease-in-out 500ms;
 }
 
-body.light span.highlight {
+.light span.highlight {
   color: color.scale($color: colors.$accent-color-dark, $lightness: 12%);
 }
 

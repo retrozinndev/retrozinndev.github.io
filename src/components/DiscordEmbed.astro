@@ -1,0 +1,61 @@
+---
+import { type Theme } from "../scripts/theme";
+
+
+type Props = {
+    initialTheme?: Theme;
+    userId?: string;
+}
+
+const {
+    initialTheme,
+    userId = "568589231954591749"
+} = Astro.props;
+---
+
+<div class="ven-discord-embed">
+    <iframe
+      title="Discord user embed"
+      id="discordEmbed"
+      width="340"
+      height="120"
+      sandbox="allow-scripts"
+      data-user-id={userId}
+      data-initial-theme={initialTheme}
+    />
+
+    <script>
+        import { getTheme } from "../scripts/theme";
+
+
+        const discordEmbed = document.getElementById("discordEmbed") as HTMLIFrameElement;
+        const id = discordEmbed?.getAttribute("data-user-id")!;
+        const initialTheme = discordEmbed?.getAttribute("data-initial-theme");
+
+        discordEmbed?.setAttribute("src", `https://widgets.vendicated.dev/user?
+            id=${id}
+            &theme=${initialTheme || getTheme()}
+            &banner=true
+            &full-banner=false
+            &rounded-corners=false
+            &discord-icon=true
+            &badges=false
+            &guess-nitro=false
+        `.replace(/ |\n/g, ""));
+
+        if(discordEmbed)
+            discordEmbed.style.display = "unset";
+
+        new MutationObserver(mutations => {
+            mutations.forEach((mutation) => {
+                if(mutation.type !== "attributes" && mutation.attributeName !== "class")
+                    return;
+
+                discordEmbed?.contentWindow?.postMessage({
+                    command: "setTheme",
+                    theme: getTheme()
+                }, "*")
+            });
+        }).observe(document.body as HTMLBodyElement, { attributes: true });
+    </script>
+</div>

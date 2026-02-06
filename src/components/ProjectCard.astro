@@ -14,7 +14,24 @@ interface Props {
 const { icon, developer, title, description, href, stars } = Astro.props;
 ---
 
-<div class="project-card" id="projectCard" onclick={`window.open("${href}", "_blank")`}>
+<div class="project-card" id="projectCard" onclick={`window.open("${href}", "_blank")`} data-url={href}>
+    <script is:inline>
+        function addDragDropHandler() {
+            const card = document.currentScript?.parentElement;
+
+            if(card) {
+                card.draggable = true;
+                card.addEventListener("dragstart", (e) => {
+                    const href = e.target.getAttribute("data-url");
+
+                    e.dataTransfer?.setData("text/uri-list", href);
+                    e.dataTransfer?.setData("text/plain", href);
+                });
+            }
+        }
+
+        addDragDropHandler();
+    </script>
     <div class="developer">
         <Image class="icon" src={
               icon ?? `https://github.com/${developer}.png?size=72`

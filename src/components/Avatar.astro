@@ -1,0 +1,18 @@
+---
+type Props = {
+    mailHash?: string;
+    size?: number;
+    alt?: string;
+};
+
+const {
+    mailHash = "093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8",
+    size = 512,
+    alt = "Profile Avatar"
+} = Astro.props;
+---
+
+<Image src={`https://1.gravatar.com/avatar/${mailHash}?size=${size.toString()}`}
+  width={size} height={size} alt={alt} class={"avatar"} 
+  loading={"lazy"} format="webp"
+/>

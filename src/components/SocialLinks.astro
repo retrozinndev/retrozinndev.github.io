@@ -66,28 +66,6 @@ const { style } = Astro.props;
     )
 } </ul>
 
-<script>
-    import { getTheme } from "../scripts/theme";
-
-    const discordEmbed = document.getElementById("discordEmbed") as HTMLIFrameElement;
-    discordEmbed?.setAttribute("src", `https://widgets.vendicated.dev/user?id=568589231954591749&theme=${getTheme()}&banner=true&full-banner=false&rounded-corners=false&discord-icon=true&badges=false&guess-nitro=false`);
-
-    if(discordEmbed)
-        discordEmbed.style.display = "initial";
-
-    new MutationObserver(mutations => {
-        mutations.forEach((mutation) => {
-            if(mutation.type !== "attributes" && mutation.attributeName !== "class")
-                return;
-
-            discordEmbed?.contentWindow?.postMessage({
-                command: "setTheme",
-                theme: getTheme() ?? "dark"
-            }, "*")
-        });
-    }).observe(document.body as HTMLBodyElement, { attributes: true });
-</script>
-
 <style lang="scss">
     .social-links {
         display: flex;
