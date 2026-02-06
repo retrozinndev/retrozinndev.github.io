@@ -16,37 +16,72 @@ export type Repository = {
     fork: boolean;
 };
 
-export async function getRepositories(): Promise<Array<Repository>> {
+/** @param username the user to fetch the repo list from 
+  * @param options settings that modify the method's behavior
+  * @returns an array of repositories */
+export async function getRepositories(username: string = "retrozinndev", options: {
+    /** whether to ignore the user's special repo (e.g.: retrozinndev/retrozinndev). @default true */
+    filterSpecialRepo?: boolean;
+    /** whether to filter out forked repos. @default true */
+    filterForks?: boolean;
+    /** whether to filter out archived repos. @default false */
+    filterArchived?: boolean;
+    /** whether to sort from most starred to less. @default false */
+    orderByMostStarred?: boolean;
+    /** authorization token for GitHub. @default undefined */
+    token?: string;
+} = {}): Promise<Array<Repository>> {
     let repos: Array<Repository>|undefined;
-    await fetch(
-        "https://api.github.com/users/retrozinndev/repos", {
-            cache: "default",
-            method: "GET",
-        }
-    ).catch((e) => {
-        console.error(`Repositories fetch rejected! Error: ${e}`);
-    }).then(res => 
-        res?.blob()
-    ).then(res => 
-        res?.text()
-    ).then(res => {
-        if(!res) return;
-        try {
-            repos = JSON.parse(res) as Array<Repository>;
-        } catch(e) {
-            console.error(`Couldn't transform response into JSON: ${e}`);
-        }
+    let result!: Response;
+
+    options.filterForks ??= true;
+    options.filterSpecialRepo ??= true;
+    options.filterArchived ??= false;
+    options.orderByMostStarred ??= false;
+
+    try {
+        result = await fetch(
+            `https://api.github.com/users/${username}/repos`, {
+                cache: "reload",
+                method: "GET",
+                headers: options.token !== undefined ? {
+                    "Authorization": options.token
+                } : undefined
+            }
+        );
+    } catch(e) {
+        throw new Error(`fetch rejected for repo list: ${(e as Error).message}`);
+    }
+
+    const content = (await (await result.blob()).text());
+    if(!content?.trim())
+        throw new Error("fetch response is empty!");
+
+    try {
+        repos = JSON.parse(content) as Array<Repository>;
+    } catch(e) {
+        throw new Error(`couldn't transform response into JSON: ${(e as Error).message}`);
+    }
+
+    if(!Array.isArray(repos))
+        throw new Error(`result is not a JSON array. response: ${repos}`);
+
+    return repos.filter(repo => {
+        if(options.filterForks && repo.fork)
+            return false;
+
+        if(options.filterSpecialRepo && repo.name === repo.owner.login)
+            return false;
+
+        if(options.filterArchived && repo.archived)
+            return false;
+
+
+        return true;
+    }).sort((a, b) => {
+        if(options.orderByMostStarred)
+            return a.stargazers_count - b.stargazers_count;
+
+        return a.name.localeCompare(b.name);
     });
-
-    if(!repos) 
-        throw new Error(`Couldn't get repositories`);
-
-    return repos;
-}
-
-export async function getMyRepos(): Promise<Array<Repository>> {
-    return (await getRepositories()).filter(repo =>
-        repo.fork !== true && // hide forks
-            repo.full_name !== repo.owner.login // hide special readme repo
-    );
 }

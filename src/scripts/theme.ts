@@ -1,53 +1,47 @@
+export type Theme = "dark"|"light";
+let theme: Theme = getStoredTheme() || "dark";
 
-export const themes: Array<string> = [ "dark", "light" ];
-var theme: string = getStoredTheme() || themes[0];
-
-export function getTheme(): string {
+export function getTheme(): Theme {
     return theme;
 }
 
-export function getThemes(): Array<string> {
-    return themes;
+export function isValidTheme(str: string): str is Theme {
+    return str === "light" || str === "dark";
 }
 
-export function getStoredTheme(): (string|undefined) {
-    if(typeof localStorage !== "undefined")
-        return localStorage.getItem("theme")?.toString() ?? getThemes()[0];
+export function getStoredTheme(): Theme {
+    let theme: Theme = "dark";
 
-    return getThemes()[0];
+    if(typeof localStorage === "object" && typeof localStorage.getItem === "function") {
+        const stored = localStorage.getItem("theme");
+
+        if(stored != null && isValidTheme(stored))
+            theme = stored;
+    }
+
+    return theme;
 }
 
 export function toggleTheme(): void {
-    switch (getTheme()) {
-        case "dark":
-            applyTheme("light");
-        break;
-
-        case "light":
-            applyTheme("dark");
-        break;
-        
-        default:
-            applyTheme(themes[0]);
-        break;
+    if(theme === "light") {
+        applyTheme("dark");
+        return;
     }
+
+    applyTheme("light");
 }
 
-export function applyTheme(themeToApply: string): void {
-    for(let i = 0; i < themes.length; i++) {
-        if(themeToApply === themes[i]) {
-            theme = themeToApply;
-            if(document !== undefined) {
-                document.body.className = themeToApply;
-                document.body.style.colorScheme = themeToApply;
-            }
+/** @returns whether the theme was successfully applied */
+export function applyTheme(themeToApply: Theme): boolean {
+    if(document == null || typeof document !== "object" || typeof document.body !== "object") 
+        return false;
 
-            break;
-        } else if(i === getThemes().length) {
-            console.error("Color Scheme(theme.ts): couldn't find provided theme " + themeToApply + " inside themes")
-        }
-    }
+    theme = themeToApply;
+    document.body.className = themeToApply;
+    document.body.style.colorScheme = themeToApply;
 
     // Set theme on localStorage
     localStorage.setItem("theme", getTheme());
+
+    return true;
 }
