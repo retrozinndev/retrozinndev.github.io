@@ -1,18 +1,20 @@
 ---
+export { getStaticPaths } from "../../i18n/route.ts";
+
 import ProjectsComponent from "../../components/ProjectsComponent.astro";
 import PageLayout from "../../layouts/PageLayout.astro";
 import { useTranslations } from "../../i18n/utils";
-import { getMyRepos } from "../../scripts/repos";
+import { getRepositories } from "../../scripts/repos";
 
-
-export { getStaticPaths } from "../../i18n/route.ts";
 
 const tr = useTranslations(Astro.params.lang as never);
-const repos = await getMyRepos();
+const repos = await getRepositories(undefined, {
+    filterArchived: true,
+    orderByMostStarred: true
+});
 ---
 
-<PageLayout title="retrozinndev's Projects">
-
+<PageLayout title="retrozinndev's Projects" maxWidth="90em">
     <h1>{ tr("projects.title") }</h1>
     <p>
         { tr("projects.description") } 
@@ -23,7 +25,6 @@ const repos = await getMyRepos();
     </div>
 
     <style>
-
         .projects {
             display: flex;
             flex-direction: row;

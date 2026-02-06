@@ -5,7 +5,7 @@ import PageLayout from "../../layouts/PageLayout.astro";
 export { getStaticPaths } from "../../i18n/route";
 ---
 
-<PageLayout title="About">
+<PageLayout title="About" maxWidth="90em">
     <div class="block">
         <h1>About</h1>
         <p>
@@ -15,10 +15,10 @@ export { getStaticPaths } from "../../i18n/route";
 
         <h2>Journey</h1>
         <p>
-        I've been learning a lot stuff about programming and GNU/Linux since 2022.
+        I've been learning a lot about programming and GNU/Linux since 2022.
         </p>
         <p>
-            Also, I've been using GNU/Linux as my primary operating system since last year! I started
+            Also, I've been using GNU/Linux as my primary operating system since 2024! I started
             this journey using 
             <LinkButton href="https://fedoraproject.org/workstation" spacing={false} external>
                 Fedora Workstation
@@ -32,7 +32,8 @@ export { getStaticPaths } from "../../i18n/route";
         <h2>Other Interests</h2>
         <p>
             Besides tech, I really like watching Anime! I am a guy that really likes slice of life, 
-            romance, comedy and drama 😜, my favorite shows are 
+            romcoms and a little bit of drama 😜 <br>
+            My favorite shows are:
             <a href="https://pt.wikipedia.org/wiki/Oshi_no_Ko">Oshi no Ko</a>, 
             <a href="https://pt.wikipedia.org/wiki/Bocchi_the_Rock!">Bocchi The Rock!</a> and 
             <a href="https://pt.wikipedia.org/wiki/Kaoru_Hana_wa_Rin_to_Saku">Kaoru Hana wa Rin to Saku</a> (The Fragrant Flower Blooms with Dignity).
@@ -43,11 +44,12 @@ export { getStaticPaths } from "../../i18n/route";
         <h3>Music</h3>
         <p>
             I really love listening to Vocaloid while I'm doing anything! My most-listened vocaloid(and also others: utau; synth-v...) 
-            artists are mostly inabakumori, JamieP, 32ki, DECO*27 and Sasuke Haraguchi.
+            artists are mostly inabakumori, JamieP, 32ki, DECO*27 and ime44.
         </p>
         <p>
-            Other than vocaloid, I really enjoy other japanese artists like Vaundy, Kenshi Yonezu, Ado and 9Lana. I Also love
+            Other than vocaloid, I really enjoy songs by artists like Vaundy, Kenshi Yonezu, Ado, 9Lana and Hoshimachi Suisei. I Also love
             listening to their songs while coding or doing anything else. 😸
+            The genres I usually listen to are J-pop, J-rock, Vocaloid, and, sometimes, 
         </p>
 
         <h2>Recent Projects</h2>
@@ -61,19 +63,13 @@ export { getStaticPaths } from "../../i18n/route";
             making usage of amazing technologies like GnomeJS, TypeScript, GTK 4, AGS and the Astal Libraries to create a nice environment for your desktop.
         </p>
         <p>
-            There's also a music player I've been working on, but it's a little bit abandoned for now. 
-            Still, I have a lot of ideas for it, so I won't be completely abandoning the app!!
+            There's also a music player I've been working a lot on recently. You should check it out!
             <br>
             The Music Player is called <a href="https://github.com/retrozinndev/Vibe">Vibe</a>,
-            it's expected to use GnomeJS, GTK, Gnim and GStreamer to make things work.
+            it uses GnomeJS, GTK, Gnim and GStreamer to make things work.
         </p>
     </div>
     <style>
-        .block {
-            max-width: 80em;
-            margin-inline: auto;
-        }
-
         p {
             font-size: 15.1px;
         }
