@@ -15,7 +15,7 @@ const tr = useTranslations(Astro.params.lang as never);
 const highlightProjects = (await getRepositories(undefined, {
     filterArchived: true,
     orderByMostStarred: true
-})).toSpliced(0, 6); // show the first 6 projects
+})).splice(0, 6); // show the first 6 projects
 ---
 
 <PageLayout title={"retrozinndev | Home"} navSpacing="4em" sideSpacing="4px" flex sideSpacing="8px" 
@@ -26,7 +26,8 @@ const highlightProjects = (await getRepositories(undefined, {
             <div class="card">
                 <div class="image-container">
                     <Image src={"https://1.gravatar.com/avatar/093b64d2016ab8acce8a2fe73cb719f527790d4ecec7f5837db8d46519b38bf8?size=512"} 
-                    width={512} format="webp" height={512} alt={"Profile Picture"} class={"image"} loading={"lazy"} />
+                      width={512} format="webp" height={512} alt={"Profile Picture"} class={"image"} loading={"lazy"}
+                    />
                 </div>
 
                 <div class="info">
