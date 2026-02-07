@@ -15,7 +15,7 @@ const tr = useTranslations(Astro.params.lang as never);
 const highlightProjects = (await getRepositories(undefined, {
     filterArchived: true,
     orderByMostStarred: true
-})).splice(0, 6); // show the first 6 projects
+})).reverse().splice(0, 6); // show the first 6 projects
 ---
 
 <PageLayout title={"retrozinndev | Home"} navSpacing="4em" sideSpacing="4px" flex sideSpacing="8px" 
