@@ -1,6 +1,6 @@
 ---
 import type { IconType } from "react-icons";
-import { FaGithub, FaGitlab, FaXTwitter, FaReddit, FaDiscord, FaSteam } from "react-icons/fa6";
+import { FaGithub, FaGitlab, FaXTwitter, FaReddit, FaDiscord, FaSteam, FaKey } from "react-icons/fa6";
 import { FiMail } from "react-icons/fi";
 import LinkButton from "./LinkButton.astro";
 
@@ -49,6 +49,11 @@ export const socials: Array<SocialLink> = [
         name: "Steam",
         href: "https://steamcommunity.com/id/retrozinndev",
         icon: FaSteam
+    },
+    {
+        name: "Public Keys (SSH)",
+        href: "https://github.com/retrozinndev.keys",
+        icon: FaKey
     }
 ];
 
@@ -67,12 +72,14 @@ const { style } = Astro.props;
 } </ul>
 
 <style lang="scss">
-    .social-links {
+    ul.social-links {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         list-style: none;
         padding: 0;
+
+        row-gap: .6em;
     }
 
     @media screen and (max-width: 800px) {
