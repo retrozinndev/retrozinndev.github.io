@@ -28,22 +28,22 @@ $padding-around: 2px;
 #navbar {
   display: flex;
   border-radius: 22px;
-  backdrop-filter: blur(40px);
   font-size: medium;
   padding: 6px 20px;
   min-height: 60px;
   transition: 120ms ease-in-out;
 
-  flex-direction: row;
   flex-wrap: wrap;
+  flex-direction: row;
   align-items: center;
 
   & .items {
     display: flex;
     width: 100%;
-    flex: 1 1 0;
     flex-wrap: wrap;
     justify-content: center;
+    row-gap: .25em;
+    flex: 1 1 0;
 
     & > .item a {
       -webkit-tap-highlight-color: transparent;
@@ -79,18 +79,24 @@ $padding-around: 2px;
 
 .navigation {
   background: color.scale($color: colors.$bg-navbar-color-dark, $alpha: -20%);
+
+  &.scrolled#navbar {
+    backdrop-filter: blur(40px);
+  }
 }
 
-body.light .navigation {
-  background-color: color.scale($color: colors.$bg-navbar-color-light, $alpha: -20%);
-}
+body {
+  &.light .navigation {
+    background-color: color.scale($color: colors.$bg-navbar-color-light, $alpha: -20%);
 
-body.dark .navigation.scrolled {
-  box-shadow: 0 0 25px 2px rgba($color: black, $alpha: .6);
-}
+    &.scrolled {
+      box-shadow: 0 0 5px 2px rgba($color: darkgray, $alpha: .6);
+    }
+  }
 
-body.light .navigation.scrolled {
-  box-shadow: 0 0 5px 2px rgba($color: darkgray, $alpha: .6);
+  &.dark .navigation.scrolled {
+    box-shadow: 0 0 25px 2px rgba($color: black, $alpha: .6);
+  }
 }
 
 .left-side {
@@ -110,7 +116,7 @@ body.light .navigation.scrolled {
 }
 
 @media screen and (max-width: 700px) {
-  #navbar {
+  .navigation#navbar {
     padding-block: 14px;
     justify-content: center;
 

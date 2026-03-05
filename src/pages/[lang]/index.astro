@@ -8,8 +8,8 @@ import ProjectsComponent from "../../components/ProjectsComponent.astro";
 import { getRepositories } from "../../scripts/repos";
 import DiscordEmbed from "../../components/DiscordEmbed.astro";
 
-
 export { getStaticPaths } from "../../i18n/route";
+
 
 const tr = useTranslations(Astro.params.lang as never);
 const highlightProjects = (await getRepositories(undefined, {
@@ -31,12 +31,12 @@ const highlightProjects = (await getRepositories(undefined, {
                 </div>
 
                 <div class="info">
-                    <h1 class="greeting">{tr("about.title")} <span class="highlight">João!</span></h1>
+                    <h1 class="greeting">{tr("resume.title")} <span class="highlight">João!</span></h1>
                     <p class="about"> {
-                        tr("about.description")
+                        tr("resume.description")
                     } </p>
 
-                    <h2 class="socials">{tr("about.socials_title")}</h2>
+                    <h2 class="socials">{tr("resume.socials_title")}</h2>
                     <div class="socials">
                         <DiscordEmbed />
                         <SocialLinks />

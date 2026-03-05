@@ -1,73 +1,56 @@
 ---
 import LinkButton from "../../components/LinkButton.astro";
+import { useTranslations, format } from "../../i18n/utils";
 import PageLayout from "../../layouts/PageLayout.astro";
 
 export { getStaticPaths } from "../../i18n/route";
+
+const tr = useTranslations(Astro.params.lang ?? "en");
 ---
 
-<PageLayout title="About" maxWidth="90em">
+<PageLayout title="About">
     <div class="block">
-        <h1>About</h1>
-        <p>
-        I'm a high school student from Brazil.
-        I absolutely love open-source and programming stuff!
-        </p>
+        <h1>{tr("about.title")}</h1>
+        <p>{tr("about.description")}</p>
 
-        <h2>Journey</h1>
-        <p>
-        I've been learning a lot about programming and GNU/Linux since 2022.
-        </p>
-        <p>
-            Also, I've been using GNU/Linux as my primary operating system since 2024! I started
-            this journey using 
-            <LinkButton href="https://fedoraproject.org/workstation" spacing={false} external>
-                Fedora Workstation
-            </LinkButton> and 
-            later on the same year, I moved to 
-            <LinkButton href="https://archlinux.org" external spacing={false}>
-                Arch Linux
-            </LinkButton> and I'm still using it until today(not planning to change at all).
-        </p>
+        <h2>{tr("about.journey.title")}</h1>
+        <p>{tr("about.journey.p1")}</p>
+        <p set:html={
+           format(tr("about.journey.p2"), 
+               `<a href="https://fedoraproject.org/workstation">Fedora Workstation</a>`,
+                `<a href="https://archlinux.org">Arch Linux</a>`
+           )
+        } />
 
-        <h2>Other Interests</h2>
-        <p>
-            Besides tech, I really like watching Anime! I am a guy that really likes slice of life, 
-            romcoms and a little bit of drama 😜 <br>
-            My favorite shows are:
-            <a href="https://pt.wikipedia.org/wiki/Oshi_no_Ko">Oshi no Ko</a>, 
-            <a href="https://pt.wikipedia.org/wiki/Bocchi_the_Rock!">Bocchi The Rock!</a> and 
-            <a href="https://pt.wikipedia.org/wiki/Kaoru_Hana_wa_Rin_to_Saku">Kaoru Hana wa Rin to Saku</a> (The Fragrant Flower Blooms with Dignity).
-        </p>
+        <h2>{tr("about.interests.title")}</h2>
+        <p set:html={
+           format(tr("about.interests.text"),
+               `<a href="https://pt.wikipedia.org/wiki/Oshi_no_Ko">Oshi no Ko</a>`,
+               `<a href="https://pt.wikipedia.org/wiki/Bocchi_the_Rock!">Bocchi The Rock!</a>`,
+               `<a href="https://pt.wikipedia.org/wiki/Kaoru_Hana_wa_Rin_to_Saku">Kaoru Hana wa Rin to Saku</a>`
+           )
+        } />
         <LinkButton external href="https://myanimelist.net/profile/retrozinndev">
-            My Anime List
+            MyAnimeList.net
         </LinkButton>
-        <h3>Music</h3>
-        <p>
-            I really love listening to Vocaloid while I'm doing anything! My most-listened vocaloid(and also others: utau; synth-v...) 
-            artists are mostly inabakumori, JamieP, 32ki, DECO*27 and ime44.
-        </p>
-        <p>
-            Other than vocaloid, I really enjoy songs by artists like Vaundy, Kenshi Yonezu, Ado, natori, 9Lana and Hoshimachi Suisei. I Also love
-            listening to their songs while coding or doing anything else. 😸 <br>
-            The genres I usually listen to are J-pop, J-rock and Vocaloid.
-        </p>
+        <h3>{tr("about.music.title")}</h3>
+        <p>{format(tr("about.music.p1"), "inabakumori", "JamieP", "32ki", "DECO*27", "ime44")}</p>
+        <p set:html={format(tr("about.music.p2"),
+           "Vaundy", "Kenshi Yonezu", "Ado", "natori", "9Lana", "Hoshimachi Suisei"
+        )} />
 
-        <h2>Recent Projects</h2>
-        <p>
-            I started working on a Desktop Environment recently, called 
-            <a href="https://github.com/retrozinndev/colorshell">colorshell</a>.
-            It's made to be used with the 
-            <LinkButton href="https://hypr.land" external spacing={false}>
-                Hyprland Wayland Compositor
-            </LinkButton>,
-            making usage of amazing technologies like GnomeJS, TypeScript, GTK 4, AGS and the Astal Libraries to create a nice environment for your desktop.
-        </p>
-        <p>
-            There's also a music player I've been working a lot on recently. You should check it out!
-            <br>
-            The Music Player is called <a href="https://github.com/retrozinndev/Vibe">Vibe</a>,
-            it uses GnomeJS, GTK, Gnim and GStreamer to make things work.
-        </p>
+        <h2>{tr("about.recent_projects.title")}</h2>
+        <p set:html={
+           format(tr("about.recent_projects.p1"),
+               `<a href="https://github.com/retrozinndev/colorshell">colorshell</a>`,
+               `<a href="https://hypr.land">Hyprland Wayland Compositor</a>`
+           )
+        } />
+        <p set:html={
+            format(tr("about.recent_projects.p2"),
+                `<a href="https://github.com/retrozinndev/vibe">Vibe</a>`
+            )
+        } />
     </div>
     <style>
         p {

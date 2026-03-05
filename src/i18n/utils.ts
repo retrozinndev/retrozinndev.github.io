@@ -36,3 +36,26 @@ export function useTranslations(lang: string): Function {
 export function getLanguages(): string[] {
     return languages;
 }
+
+
+/** format a string in the C-style. (use this to replace items in i18n strings.
+  * supports %s for strings, %d/%i/%f/%u for numbers and %n for HTML Elements */
+export function format(input: string, ...values: Array<any>): string {
+    values.forEach(val => {
+        let expr: RegExp = /\%s/;
+        const isHTML = typeof val === "object" && (
+            val instanceof Node || val instanceof HTMLElement
+        );
+
+        if(typeof val === "number")
+            expr = /\%[dfui]/;
+
+        if(isHTML)
+            expr = /\%n/;
+
+        input = input.replace(expr, String(val));
+    });
+
+    return input;
+}
+
