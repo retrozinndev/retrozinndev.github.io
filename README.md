@@ -1,62 +1,43 @@
-# Retrozinn's Website ([retrozinndev.github.io](https://retrozinndev.github.io))
-[![Netlify Status](https://api.netlify.com/api/v1/badges/8754cf85-e75f-495c-8818-011d76157362/deploy-status)](https://app.netlify.com/sites/retrozinndev/deploys)
+# [retrozinn.dev](https://retrozinn.dev/)
+This is my personal website's repo!
 
-This is my website repo! 
-Feel free to take a look into the source code and contribute if you want 😁
+You're allowed to use this under the terms of `GPL-3.0`, embedded 
+in the `LICENSE` file at the root of the project directory.
 
----
 
-# Astro Starter Kit: Basics
+## Development
+Cloning, compiling and developing.
 
-```sh
-npm create astro@latest -- --template basics
+### Clone
+```zsh
+# via ssh:
+git clone git@github.com:retrozinndev/retrozinn.dev.git
+# via https:
+git clone https://github.com/retrozinndev/retrozinn.dev.git
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+### Build
+```zsh
+pnpm build # or `pnpm astro build`
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### Development Environment / `astro dev`
+```zsh
+pnpm dev # or `pnpm astro dev`
+```
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Preview
+```zsh
+pnpm preview # or `pnpm astro preview`
+```
 
-Any static assets, like images, can be placed in the `public/` directory.
+### Shipping
+Cloudflare automatically builds on push, so yeah.
+```zsh
+git push
+```
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+#### Production-ready local build
+```zsh
+pnpm build --mode production # output on `dist/`
+```
